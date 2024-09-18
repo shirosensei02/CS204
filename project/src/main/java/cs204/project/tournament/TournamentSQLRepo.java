@@ -17,6 +17,7 @@ public class TournamentSQLRepo implements TournamentRepository{
   @Override
   public int deleteById(Long id) {
     // TODO Auto-generated method stub
+    tournaments.remove(id);
     return 0;
   }
 

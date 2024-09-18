@@ -1,0 +1,19 @@
+### POST a new Tournament
+POST http://localhost:8080/tournaments
+Content-Type: application/json
+
+{
+    "id": 123456,
+  "name": "Summer Tournament",
+  "date": "2024-08-01",
+  "rankRange": [100, 500],
+  "status": "upcoming",
+  "region": "NA",
+  "playerList": ["Player1", "Player2"]
+}
+
+###
+DELETE http://localhost:8080/tournaments/123456
+
+### DELETE a Tournament by ID
+DELETE http://localhost:8080/tournaments/123456

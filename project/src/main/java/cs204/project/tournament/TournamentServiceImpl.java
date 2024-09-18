@@ -28,7 +28,8 @@ public class TournamentServiceImpl implements TournamentService{
     @Override
     public int deleteTournament(Long id) {
       // TODO Auto-generated method stub
-      return 0;
+      return tournaments.deleteById(id);
+      // return 0;
     }
 
     @Override

@@ -76,5 +76,12 @@ public class TournamentController {
     public void deleteTournament(@PathVariable Long id) {
       if (tournamentService.deleteTournament(id) == 0)
         throw new TournamentNotFoundException(id);
+        // try{
+        //   tournamentService.deleteTournament(id);
+        // } catch (EmptyResultDataAccessException e) {
+        //   throw new TournamentNotFoundException(id)
+        // }
+        
     }
+    
 }

@@ -85,7 +85,16 @@ public class TournamentSQLRepo implements TournamentRepository {
     // TODO change to add to db
     // TODO set id into tournament after adding into db
     // tournaments.add(tournament);
-    return null;
+    String saveSQL = "INSERT INTO Tournament (TournID, TournName, TournDate, RankRange, TournStatus, TournRegion, PlayerList)";
+    jdbcTemplate.update(saveSQL,  tournament.getId(), 
+                                  tournament.getName(), 
+                                  tournament.getDate(), 
+                                  tournament.getRankRange(), 
+                                  tournament.getStatus(), 
+                                  tournament.getRegion(), 
+                                  tournament.getPlayerList()
+                                  );
+    return ;
   }
 
   @Override

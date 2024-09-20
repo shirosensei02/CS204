@@ -33,6 +33,15 @@ public class Tournament {
       playerList = new ArrayList<>();
     }
 
+    public Tournament(String name, String date, int[] rankRange, String status, String region) {
+      this.name = name;
+      this.date = date;
+      this.rankRange = rankRange;
+      this.status = status;
+      this.region = region;
+      playerList = new ArrayList<>();
+    }
+
     public Tournament(Long id, String name, String date, int[] rankRange, String status, String region, List<String> playerList) {
       this.id = id;
       this.name = name;

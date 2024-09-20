@@ -2,7 +2,13 @@ package cs204.project.tournament;
 
 import java.util.List;
 import java.util.Optional;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.google.gson.JsonArray;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 @Repository
 public class TournamentSQLRepo implements TournamentRepository {
@@ -69,8 +76,7 @@ public class TournamentSQLRepo implements TournamentRepository {
               rankRange,
               rs.getString("status"),
               rs.getString("region"),
-              playerList
-            );
+              playerList);
         });
   }
 
@@ -85,16 +91,47 @@ public class TournamentSQLRepo implements TournamentRepository {
     // TODO change to add to db
     // TODO set id into tournament after adding into db
     // tournaments.add(tournament);
-    String saveSQL = "INSERT INTO Tournament (TournID, TournName, TournDate, RankRange, TournStatus, TournRegion, PlayerList)";
-    jdbcTemplate.update(saveSQL,  tournament.getId(), 
-                                  tournament.getName(), 
-                                  tournament.getDate(), 
-                                  tournament.getRankRange(), 
-                                  tournament.getStatus(), 
-                                  tournament.getRegion(), 
-                                  tournament.getPlayerList()
-                                  );
-    return ;
+    // String saveSQL = "INSERT INTO Tournament (TournID, TournName, TournDate,
+    // RankRange, TournStatus, TournRegion, PlayerList)";
+    // jdbcTemplate.update(saveSQL, tournament.getId(),
+    // tournament.getName(),
+    // tournament.getDate(),
+    // tournament.getRankRange(),
+    // tournament.getStatus(),
+    // tournament.getRegion(),
+    // tournament.getPlayerList()
+    // );
+
+    // String saveSQLString = "insert into TOURNAMENTS (TourName, TournDate, RankRange, TournStatus,TournRegion, PlayerList) values (?, ?, ?, ?, ?, ?) ";
+    String saveSQLString = "insert into TOURNAMENTS (id, name, date, rankRange, status, region, playerList) values (?, ?, ?, ?, ?, ?) ";
+    // KeyHolder gets the auto-generated key from the INSERT mySQL statement
+    GeneratedKeyHolder holder = new GeneratedKeyHolder();
+    try {
+    // Convert RankRange and PlayerList to JSON strings
+    ObjectMapper objectMapper = new ObjectMapper();
+    String rankRangeJson = objectMapper.writeValueAsString(tournament.getRankRange());
+    String playerListJson = objectMapper.writeValueAsString(tournament.getPlayerList());
+
+    jdbcTemplate.update((Connection conn) -> {
+      PreparedStatement statement = conn.prepareStatement(
+          saveSQLString,
+          Statement.RETURN_GENERATED_KEYS);
+      statement.setString(1, tournament.getName());
+      statement.setString(2, tournament.getDate());
+      statement.setString(3, rankRangeJson);
+      statement.setString(4, tournament.getStatus());
+      statement.setString(5, tournament.getRegion());
+      statement.setString(6, playerListJson);
+      return statement;
+    }, holder);
+
+    Long primaryKey = holder.getKey().longValue();
+    tournament.setId(primaryKey);
+    return primaryKey;
+  } catch (JsonProcessingException e) {
+    e.printStackTrace();
+    throw new RuntimeException("Error converting tournament data to JSON", e);
+  }
   }
 
   @Override

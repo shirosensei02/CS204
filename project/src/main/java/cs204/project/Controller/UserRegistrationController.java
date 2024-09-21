@@ -19,7 +19,7 @@ public class UserRegistrationController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping(value = "/user/signup", consumes = "application/json")
-    public MyAppUser createAdmin(@RequestBody MyAppUser user) {
+    public MyAppUser createUser(@RequestBody MyAppUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

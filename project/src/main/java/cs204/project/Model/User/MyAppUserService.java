@@ -22,7 +22,7 @@ public class MyAppUserService implements UserDetailsService {
         return User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .roles(user.getRole())
+                .roles("USER")  // Pass just "USER", not "ROLE_USER"
                 .build();
     }
 }

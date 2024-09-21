@@ -22,7 +22,7 @@ public class AdminService implements UserDetailsService {
         return User.builder()
                 .username(admin.getUsername())
                 .password(admin.getPassword())
-                .roles(admin.getRole())
+                .roles("ADMIN")  // Pass just "ADMIN", not "ROLE_ADMIN"
                 .build();
     }
 }

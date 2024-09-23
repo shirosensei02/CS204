@@ -19,26 +19,39 @@ public class ProjectApplication {
 		ApplicationContext ctx = SpringApplication.run(ProjectApplication.class, args);
 
     JdbcTemplate template = ctx.getBean(JdbcTemplate.class);
-    // TournamentRepository repo = ctx.getBean(TournamentRepository.class);
+    TournamentRepository repo = ctx.getBean(TournamentRepository.class);
 
-    template.execute("CREATE TABLE IF NOT EXISTS tournaments (" + //
-            "id BIGINT AUTO_INCREMENT PRIMARY KEY," + //
-            "name VARCHAR(255) NOT NULL," + //
-            "date DATE NOT NULL," + //
-            "rankRange JSON NOT NULL," + //
-            "status VARCHAR(50) NOT NULL," + //
-            "region VARCHAR(100) NOT NULL," + //
-            "playerList JSON" + //
-            ")");
+//     template.execute("CREATE TABLE IF NOT EXISTS tournaments (" + //
+//             "id BIGINT AUTO_INCREMENT PRIMARY KEY," + //
+//             "name VARCHAR(255) NOT NULL," + //
+//             "date DATE NOT NULL," + //
+//             "rankRange JSON NOT NULL," + //
+//             "status VARCHAR(50) NOT NULL," + //
+//             "region VARCHAR(100) NOT NULL," + //
+//             "playerList JSON" + //
+//             ")");
 
-    // List<Tournament> listTournaments = Arrays.asList(
-    //   new Tournament("t1", "11/11/11", new int[]{1,2}, "open", "asia"),
-    //   new Tournament("t2", "11/11/11", new int[]{3,6}, "open", "west")
-    // );
+            template.execute("CREATE TABLE TOURNAMENTS(" + //
+                "id        INT             AUTO_INCREMENT PRIMARY KEY," + 
+                "name      varchar(50)     NOT NULL," +
+                "date      DATE            NOT NULL," + 
+                "rankRange      JSON            NOT NULL," + 
+                "status    varchar(50)     NOT NULL," + 
+                "region    varchar(100)    NOT NULL," + 
+                "playerList     JSON            NOT NULL," + 
+                "CONSTRAINT     tourn_pk        PRIMARY KEY (ID)" + 
+                ");");
 
-    // listTournaments.forEach(tournament -> {
-    //   repo.save(tournament);
-    // });
+
+
+    List<Tournament> listTournaments = Arrays.asList(
+      new Tournament("t1", "11/11/11", new int[]{1,2}, "open", "asia"),
+      new Tournament("t2", "11/11/11", new int[]{3,6}, "open", "west")
+    );
+
+    listTournaments.forEach(tournament -> {
+      repo.save(tournament);
+    });
 	}
 
 }

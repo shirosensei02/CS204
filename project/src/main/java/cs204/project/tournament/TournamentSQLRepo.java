@@ -95,6 +95,16 @@ public class TournamentSQLRepo implements TournamentRepository {
     }
   }
 
+  public Long addPlayer(Player player, Tournament tournament) {
+    //get tournament player list
+    // change JSON back to list
+    // append player to NEWplayerlist
+    // change list to JSON
+    // new tournament (old details..., NEWplayerlist)
+    // save(tournament)
+    // return primary key of that tournament
+  }
+
   @Override
   public Long save(Tournament tournament) {
     String sql = "INSERT INTO tournaments (name, date, rankRange, status, region, playerList) " +

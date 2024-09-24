@@ -2,6 +2,7 @@ package cs204.project.tournament;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 // import javax.persistence.Entity;
 // import javax.persistence.GeneratedValue;
@@ -17,33 +18,27 @@ public class Tournament {
     private Long id;
 
     private String name;
-    private String date;
+    private LocalDate date;
     private int[] rankRange;
     private String status;
     private String region;
-    private List<String> playerList;
+    private List<Long> playerList;
 
-    public Tournament(Long id, String name, String date, int[] rankRange, String status, String region) {
+    public Tournament() {
+    }
+    
+    public Tournament(Long id, String name, LocalDate date, int[] rankRange, String status, String region, List<Long> playerList) {
       this.id = id;
       this.name = name;
       this.date = date;
       this.rankRange = rankRange;
       this.status = status;
       this.region = region;
-      playerList = new ArrayList<>();
+      this.playerList = playerList;
     }
 
-    public Tournament(String name, String date, int[] rankRange, String status, String region) {
-      this.name = name;
-      this.date = date;
-      this.rankRange = rankRange;
-      this.status = status;
-      this.region = region;
-      playerList = new ArrayList<>();
-    }
-
-    public Tournament(Long id, String name, String date, int[] rankRange, String status, String region, List<String> playerList) {
-      this.id = id;
+    public Tournament(String name, LocalDate date, 
+        int[] rankRange, String status, String region, List<Long> playerList) {
       this.name = name;
       this.date = date;
       this.rankRange = rankRange;
@@ -58,10 +53,10 @@ public class Tournament {
     public void setName(String name) {
       this.name = name;
     }
-    public String getDate() {
+    public LocalDate getDate() {
       return date;
     }
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
       this.date = date;
     }
     public int[] getRankRange() {
@@ -82,10 +77,10 @@ public class Tournament {
     public void setRegion(String region) {
       this.region = region;
     }
-    public List<String> getPlayerList() {
+    public List<Long> getPlayerList() {
       return playerList;
     }
-    public void setPlayerList(List<String> playerList) {
+    public void setPlayerList(List<Long> playerList) {
       this.playerList = playerList;
     }
 

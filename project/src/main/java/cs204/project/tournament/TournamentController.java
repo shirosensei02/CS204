@@ -37,11 +37,11 @@ public class TournamentController {
      */
     @GetMapping("tournaments/{id}")
     public Tournament getTournament(@PathVariable Long id){
-      return null;
+      return tournamentService.getTournament(id);
     }
 
         /**
-     * Add a new book with POST request to "/tournaments"
+     * Add a new tournament with POST request to "/tournaments"
      * Note the use of @RequestBody
      * @param tournament
      * @return list of all tournament
@@ -49,6 +49,7 @@ public class TournamentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/tournaments")
     public Tournament addTournament(@RequestBody Tournament tournament){
+        System.out.println(tournament);
         return tournamentService.addTournament(tournament);
     }
 
@@ -73,7 +74,7 @@ public class TournamentController {
      * @param id
      */
     @DeleteMapping("/tournaments/{id}")
-    public void deleteTournament(@PathVariable Long id) {
+    public void deleteTournament(@PathVariable long id) {
       if (tournamentService.deleteTournament(id) == 0)
         throw new TournamentNotFoundException(id);
         // try{

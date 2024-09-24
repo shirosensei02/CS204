@@ -6,15 +6,27 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.sql.Statement;
+import java.sql.Array;
+import java.sql.Connection;
+import java.sql.Date;
+// import java.time.LocalDate;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+// import org.json.JSONArray;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
-
-import com.google.gson.JsonArray;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -46,98 +58,110 @@ public class TournamentSQLRepo implements TournamentRepository {
   public List<Tournament> findAll() {
     // TODO change to query all from db
     // return tournaments;
+
     return jdbcTemplate.query("SELECT * from tournaments",
-        (rs, rownum) -> {
-          String rankRangeJson = rs.getString("rankRange");
-
-          int[] rankRange = null;
-          if (rankRangeJson != null && !rankRangeJson.isEmpty()) {
-            // Parse JSON array and convert to int[]
-            JSONArray jsonArray = new JSONArray(rankRangeJson);
-            rankRange = new int[jsonArray.length()];
-            for (int i = 0; i < jsonArray.length(); i++) {
-              rankRange[i] = jsonArray.getInt(i);
-            }
-          }
-
-          String playerListJson = rs.getString("playerList");
-          List<String> playerList = new ArrayList<>();
-          if (playerListJson != null) {
-            JSONArray playerArray = new JSONArray(playerListJson);
-            for (int i = 0; i < playerArray.length(); i++) {
-              playerList.add(playerArray.getString(i));
-            }
-          }
-
-          return new Tournament(
-              rs.getLong("id"),
-              rs.getString("name"),
-              rs.getString("date"),
-              rankRange,
-              rs.getString("status"),
-              rs.getString("region"),
-              playerList);
-        });
+        (rs, rownum) -> mapRow(rs, rownum));
   }
 
   @Override
   public Optional<Tournament> findById(Long id) {
-    // TODO Auto-generated method stub
-    return Optional.empty();
+    try {
+      return Optional.ofNullable(
+        jdbcTemplate.queryForObject(
+          "SELECT * FROM tournaments WHERE id = ?",
+          (rs, rowNum) -> mapRow(rs, rowNum),
+          id));
+
+    } catch (EmptyResultDataAccessException e) {
+      // book not found - return an empty object
+      return Optional.empty();
+    }
   }
 
   @Override
   public Long save(Tournament tournament) {
-    // TODO change to add to db
-    // TODO set id into tournament after adding into db
-    // tournaments.add(tournament);
-    // String saveSQL = "INSERT INTO Tournament (TournID, TournName, TournDate,
-    // RankRange, TournStatus, TournRegion, PlayerList)";
-    // jdbcTemplate.update(saveSQL, tournament.getId(),
-    // tournament.getName(),
-    // tournament.getDate(),
-    // tournament.getRankRange(),
-    // tournament.getStatus(),
-    // tournament.getRegion(),
-    // tournament.getPlayerList()
-    // );
+    String sql = "INSERT INTO tournaments (name, date, rankRange, status, region, playerList) " +
+        "VALUES (?, ?, ?, ?, ?, ?) RETURNING id"; // RETURNING id
 
-    // String saveSQLString = "insert into TOURNAMENTS (TourName, TournDate, RankRange, TournStatus,TournRegion, PlayerList) values (?, ?, ?, ?, ?, ?) ";
-    String saveSQLString = "insert into TOURNAMENTS (id, name, date, rankRange, status, region, playerList) values (?, ?, ?, ?, ?, ?) ";
-    // KeyHolder gets the auto-generated key from the INSERT mySQL statement
     GeneratedKeyHolder holder = new GeneratedKeyHolder();
-    try {
-    // Convert RankRange and PlayerList to JSON strings
-    ObjectMapper objectMapper = new ObjectMapper();
-    String rankRangeJson = objectMapper.writeValueAsString(tournament.getRankRange());
-    String playerListJson = objectMapper.writeValueAsString(tournament.getPlayerList());
-
     jdbcTemplate.update((Connection conn) -> {
-      PreparedStatement statement = conn.prepareStatement(
-          saveSQLString,
-          Statement.RETURN_GENERATED_KEYS);
-      statement.setString(1, tournament.getName());
-      statement.setString(2, tournament.getDate());
-      statement.setString(3, rankRangeJson);
-      statement.setString(4, tournament.getStatus());
-      statement.setString(5, tournament.getRegion());
-      statement.setString(6, playerListJson);
+      PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+      try {
+        setDB(conn, statement, tournament);
+      } catch (JsonProcessingException e) {
+        e.printStackTrace();
+      }
       return statement;
     }, holder);
 
     Long primaryKey = holder.getKey().longValue();
-    tournament.setId(primaryKey);
+    System.out.println(primaryKey);
     return primaryKey;
-  } catch (JsonProcessingException e) {
-    e.printStackTrace();
-    throw new RuntimeException("Error converting tournament data to JSON", e);
-  }
   }
 
   @Override
   public int update(Tournament tournament) {
-    // TODO Auto-generated method stub
-    return 0;
+    String sql = "UPDATE tournaments SET name = ?, date = ?, rankRange = ?, status = ?, region = ?, playerList = ? WHERE id = ?";
+
+    return jdbcTemplate.update((Connection conn) -> {
+      PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+      try {
+        setDB(conn, statement, tournament);
+      } catch (JsonProcessingException e) {
+        e.printStackTrace();
+      }
+      statement.setLong(7, tournament.getId());
+      return statement;
+    });
   }
 
+  public PreparedStatement setDB(Connection conn, PreparedStatement statement, Tournament tournament) throws JsonProcessingException, SQLException {
+    ObjectMapper objectMapper = new ObjectMapper();
+    String playerListJson = null;
+    if (tournament.getPlayerList() != null) {
+      playerListJson = objectMapper.writeValueAsString(tournament.getPlayerList());
+    }
+    Date sqlDate = Date.valueOf(tournament.getDate());
+
+    statement.setString(1, tournament.getName());
+    statement.setDate(2, sqlDate);
+    statement.setArray(3,
+        conn.createArrayOf("integer", Arrays.stream(tournament.getRankRange()).boxed().toArray(Integer[]::new)));
+    statement.setString(4, tournament.getStatus());
+    statement.setString(5, tournament.getRegion());
+    if (playerListJson != null) {
+      statement.setString(6, playerListJson);
+    } else {
+      statement.setNull(6, java.sql.Types.OTHER); // Use the appropriate SQL type if needed
+    }
+    return statement;
+  }
+
+  public Tournament mapRow(ResultSet rs, int rowNum) throws SQLException {
+    ObjectMapper objectMapper = new ObjectMapper(); // Jackson ObjectMapper
+
+    // Retrieve the playerList JSON
+    String playerListJson = rs.getString("playerList");
+    List<Long> playerList = new ArrayList<>();
+    if (playerListJson != null && !playerListJson.isEmpty()) {
+      // Convert JSON string to ArrayList<Long>
+      try {
+        Long[] playerArray = objectMapper.readValue(playerListJson, Long[].class);
+        playerList = new ArrayList<>(List.of(playerArray)); // Convert array to ArrayList
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+
+    // Map the ResultSet data to a Tournament object
+    return new Tournament(
+      rs.getLong("id"),
+      rs.getString("name"),
+      rs.getDate("date").toLocalDate(),
+      Arrays.stream((Integer[]) rs.getArray("rankRange").getArray()).mapToInt(e -> (int) e).toArray(),
+      rs.getString("status"),
+      rs.getString("region"),
+      playerList
+    );
+  }
 }

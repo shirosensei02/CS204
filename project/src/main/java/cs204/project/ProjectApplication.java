@@ -37,15 +37,24 @@ public class ProjectApplication {
                  ")");
 
     template.execute("CREATE TABLE IF NOT EXISTS player(" + 
-    "" + 
-    "" + 
-    "" + 
-    "" + 
-    "" + 
-    "" + 
-    "" + 
+    "ID INT NOT NULL," + 
+    "PlayerName VARCHAR(50) NOT NULL," + 
+    "PW VARCHAR(50) NOT NULL," + 
+    "UserRole VARCHAR(50) NOT NULL," + 
+    "CONSTRAINT player_pk PRIMARY KEY (ID)" + 
     ")"
     );
+
+    template.execute("CREATE TABLE IF NOT EXISTS administrator(" + 
+    "ID INT NOT NULL," + 
+    "AdminName VARCHAR(50) NOT NULL," + 
+    "PW VARCHAR(50) NOT NULL," + 
+    "UserRole VARCHAR(50) NOT NULL," + 
+    "CONSTRAINT admin_pk PRIMARY KEY (ID)" +
+    ")"
+    );
+    
+    
   
     // List<Tournament> listTournaments = Arrays.asList(
     //   new Tournament("t1", LocalDate.of(2024, 9, 23), new int[]{1,2}, "open", "asia"),
@@ -55,8 +64,8 @@ public class ProjectApplication {
 
 
     List<Tournament> listTournaments = Arrays.asList(
-      new Tournament("t1", "11/11/11", new int[]{1,2}, "open", "asia"),
-      new Tournament("t2", "11/11/11", new int[]{3,6}, "open", "west")
+      new Tournament("t1", LocalDate.of(2024, 9, 23), new int[]{1,2}, "open", "asia"),
+      new Tournament("t2", LocalDate.of(2024, 9, 23), new int[]{3,6}, "open", "west")
     );
 
     listTournaments.forEach(tournament -> {

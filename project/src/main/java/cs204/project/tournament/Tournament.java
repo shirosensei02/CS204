@@ -27,7 +27,9 @@ public class Tournament {
     public Tournament() {
     }
     
-    public Tournament(Long id, String name, LocalDate date, int[] rankRange, String status, String region, List<Long> playerList) {
+    public Tournament(Long id, String name, LocalDate date, 
+                    int[] rankRange, String status, String region, 
+                    List<Long> playerList) {
       this.id = id;
       this.name = name;
       this.date = date;
@@ -38,7 +40,18 @@ public class Tournament {
     }
 
     public Tournament(String name, LocalDate date, 
-        int[] rankRange, String status, String region, List<Long> playerList) {
+                    int[] rankRange, String status, String region) {
+      this.id = id;
+      this.name = name;
+      this.date = date;
+      this.rankRange = rankRange;
+      this.status = status;
+      this.region = region;
+    }
+
+    public Tournament(String name, LocalDate date, 
+        int[] rankRange, String status, String region, 
+        List<Long> playerList) {
       this.name = name;
       this.date = date;
       this.rankRange = rankRange;

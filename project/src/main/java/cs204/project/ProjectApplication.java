@@ -35,6 +35,17 @@ public class ProjectApplication {
                  "region VARCHAR(100) NOT NULL," +
                  "playerList JSON" +
                  ")");
+
+    template.execute("CREATE TABLE IF NOT EXISTS player(" + 
+    "" + 
+    "" + 
+    "" + 
+    "" + 
+    "" + 
+    "" + 
+    "" + 
+    ")"
+    );
   
     // List<Tournament> listTournaments = Arrays.asList(
     //   new Tournament("t1", LocalDate.of(2024, 9, 23), new int[]{1,2}, "open", "asia"),

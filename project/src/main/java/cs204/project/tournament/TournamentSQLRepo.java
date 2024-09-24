@@ -50,8 +50,25 @@ public class TournamentSQLRepo implements TournamentRepository {
     // int size = tournaments.size();
     // tournaments.removeIf(tournament -> tournament.getId() == id);
 
+    // Method 1:
+    String deleteSQL = "DELETE from tournaments WHERE ID = ?";
+    int affectedRows = jdbcTemplate.update(deleteSQL, id);
+    if (affectedRows > 0) {
+      return affectedRows;
+    } else {
+      throw new TournamentNotFoundException(id);
+    }
+    // Method 2:
+    // String deleteSQL = "DELETE from tournaments WHERE ID = ?";
+    // return jdbcTemplate.update(deleteSQL, id);
+    
+    // If got delete, num rows deleted returned
+    // If no delete, either by no ID or what, return 0?
+    // So no need handle IDnotFound?
+    // 
+
     // return size - tournaments.size();
-    return 0;
+    // return 0;
   }
 
   @Override

@@ -95,14 +95,25 @@ public class TournamentSQLRepo implements TournamentRepository {
     }
   }
 
-  public Long addPlayer(Player player, Tournament tournament) {
+  public Long addPlayer(MyAppUser player, Tournament tournament) {
     //get tournament player list
     // change JSON back to list
     // append player to NEWplayerlist
     // change list to JSON
     // new tournament (old details..., NEWplayerlist)
     // save(tournament)
-    // return primary key of that tournament
+    // return primary key of tournament
+
+    Long newPlayerId = player.getId();
+    List<Long> newList = new ArrayList<Long>(tournament.getPlayerList());
+    newList.add(newPlayerId);
+    Tournament newTournament = new Tournament(tournament.getId(), tournament.getName(), 
+                                            tournament.getDate(), tournament.getRankRange(), 
+                                            tournament.getStatus(), tournament.getRegion(), 
+                                            newList);
+    update(newTournament);
+    return newPlayerId; 
+    // return Long.valueOf(update(tournament));
   }
 
   @Override

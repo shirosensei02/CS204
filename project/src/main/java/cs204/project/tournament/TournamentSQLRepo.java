@@ -107,11 +107,13 @@ public class TournamentSQLRepo implements TournamentRepository {
     Long newPlayerId = player.getId();
     List<Long> newList = new ArrayList<Long>(tournament.getPlayerList());
     newList.add(newPlayerId);
-    Tournament newTournament = new Tournament(tournament.getId(), tournament.getName(), 
-                                            tournament.getDate(), tournament.getRankRange(), 
-                                            tournament.getStatus(), tournament.getRegion(), 
-                                            newList);
-    update(newTournament);
+    tournament.setPlayerList(newList);
+    
+    // Tournament newTournament = new Tournament(tournament.getId(), tournament.getName(), 
+    //                                         tournament.getDate(), tournament.getRankRange(), 
+    //                                         tournament.getStatus(), tournament.getRegion(), 
+    //                                         newList);
+    update(tournament);
     return newPlayerId; 
     // return Long.valueOf(update(tournament));
   }

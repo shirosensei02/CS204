@@ -84,5 +84,18 @@ public class TournamentController {
         // }
         
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @PutMapping("/tournaments/{id}/player/{pID}")
+    public Long joinTournament(@PathVariable long id, @PathVariable long pID, @RequestBody Tournament tournament) {
+      if (tournament.isPlayerListFull()) {
+        throw new TournamentIsFullException(id);
+      }
+      if (player.getRank() beyond rank range of tournament) {
+        throw new notAppropriateRankException();
+      }
+
+      return id; // ID of tournament
+    }
     
 }

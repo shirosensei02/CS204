@@ -1,5 +1,7 @@
-package cs204.project.tournament;
-import cs204.project.Model.User.MyAppUser;
+package cs204.project.Model.User;
+
+// package cs204.project.tournament;
+// import cs204.project.Model.User.MyAppUser;
 
 
 import java.util.List;
@@ -22,6 +24,8 @@ import java.sql.SQLException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import cs204.project.tournament.Tournament;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,7 +38,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 @Repository
-public class TournamentSQLRepo implements TournamentRepository {
+public class MyAppUserSQLRepo implements MyAppUserRepository {
 
   // TODO implement SQL connection here
   @Autowired
@@ -42,7 +46,7 @@ public class TournamentSQLRepo implements TournamentRepository {
   // for testing
   // List<Tournament> tournaments = new ArrayList<>();
 
-  public TournamentSQLRepo(JdbcTemplate jdbcTemplate) {
+  public MyAppUserSQLRepo(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
   }
 
@@ -53,12 +57,12 @@ public class TournamentSQLRepo implements TournamentRepository {
     // tournaments.removeIf(tournament -> tournament.getId() == id);
 
     // Method 1:
-    String deleteSQL = "DELETE from tournaments WHERE ID = ?";
+    String deleteSQL = "DELETE from player WHERE ID = ?";
     int affectedRows = jdbcTemplate.update(deleteSQL, id);
     if (affectedRows > 0) {
       return affectedRows;
     } else {
-      throw new TournamentNotFoundException(id);
+      throw new PlayerNotFoundException(id);
     }
     // Method 2:
     // String deleteSQL = "DELETE from tournaments WHERE ID = ?";
@@ -83,11 +87,11 @@ public class TournamentSQLRepo implements TournamentRepository {
   }
 
   @Override
-  public Optional<Tournament> findById(Long id) {
+  public Optional<MyAppUser> findById(Long id) {
     try {
       return Optional.ofNullable(
         jdbcTemplate.queryForObject(
-          "SELECT * FROM tournaments WHERE id = ?",
+          "SELECT * FROM player WHERE id = ?",
           (rs, rowNum) -> mapRow(rs, rowNum),
           id));
 
@@ -97,42 +101,18 @@ public class TournamentSQLRepo implements TournamentRepository {
     }
   }
 
-  public Long addPlayer(MyAppUser player, Tournament tournament) {
-    //get tournament player list
-    // change JSON back to list
-    // append player to NEWplayerlist
-    // change list to JSON
-    // new tournament (old details..., NEWplayerlist)
-    // save(tournament)
-    // return primary key of tournament
-
-    Long newPlayerId = player.getId();
-    List<Long> newList = new ArrayList<Long>(tournament.getPlayerList());
-    newList.add(newPlayerId);
-    tournament.setPlayerList(newList);
-    
-    // Tournament newTournament = new Tournament(tournament.getId(), tournament.getName(), 
-    //                                         tournament.getDate(), tournament.getRankRange(), 
-    //                                         tournament.getStatus(), tournament.getRegion(), 
-    //                                         newList);
-    update(tournament);
-    return newPlayerId; 
-    // return Long.valueOf(update(tournament));
-  }
 
   @Override
-  public Long save(Tournament tournament) {
-    String sql = "INSERT INTO tournaments (name, date, rankRange, status, region, playerList) " +
-        "VALUES (?, ?, ?, ?, ?, ?) RETURNING id"; // RETURNING id
+  public Long save(MyAppUser player) {
+    String sql = "INSERT INTO player (PlayerName, PlayerPW, UserRole) " +
+        "VALUES (?, ?, ?) RETURNING id"; // RETURNING id
 
     GeneratedKeyHolder holder = new GeneratedKeyHolder();
     jdbcTemplate.update((Connection conn) -> {
       PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      try {
-        setDB(conn, statement, tournament);
-      } catch (JsonProcessingException e) {
-        e.printStackTrace();
-      }
+
+        setDB(conn, statement, player);
+      
       return statement;
     }, holder);
 
@@ -142,40 +122,23 @@ public class TournamentSQLRepo implements TournamentRepository {
   }
 
   @Override
-  public int update(Tournament tournament) {
-    String sql = "UPDATE tournaments SET name = ?, date = ?, rankRange = ?, status = ?, region = ?, playerList = ? WHERE id = ?";
+  public int update(MyAppUser player) {
+    String sql = "UPDATE tournaments SET PlayerName = ?, PlayerPW = ?, UserRole = ? WHERE id = ?";
 
     return jdbcTemplate.update((Connection conn) -> {
       PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-      try {
-        setDB(conn, statement, tournament);
-      } catch (JsonProcessingException e) {
-        e.printStackTrace();
-      }
-      statement.setLong(7, tournament.getId());
+    
+        setDB(conn, statement, player);
+      
+      statement.setLong(7, player.getId());
       return statement;
     });
   }
 
-  public PreparedStatement setDB(Connection conn, PreparedStatement statement, Tournament tournament) throws JsonProcessingException, SQLException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    String playerListJson = null;
-    if (tournament.getPlayerList() != null) {
-      playerListJson = objectMapper.writeValueAsString(tournament.getPlayerList());
-    }
-    Date sqlDate = Date.valueOf(tournament.getDate());
-
-    statement.setString(1, tournament.getName());
-    statement.setDate(2, sqlDate);
-    statement.setArray(3,
-        conn.createArrayOf("integer", Arrays.stream(tournament.getRankRange()).boxed().toArray(Integer[]::new)));
-    statement.setString(4, tournament.getStatus());
-    statement.setString(5, tournament.getRegion());
-    if (playerListJson != null) {
-      statement.setString(6, playerListJson);
-    } else {
-      statement.setNull(6, java.sql.Types.OTHER); // Use the appropriate SQL type if needed
-    }
+  public PreparedStatement setDB(Connection conn, PreparedStatement statement, MyAppUser player) throws SQLException {
+    statement.setString(1, player.getUsername());
+    statement.setString(2, player.getPassword());
+    statement.setString(3, player.getRole());
     return statement;
   }
 

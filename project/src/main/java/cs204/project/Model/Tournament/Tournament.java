@@ -1,4 +1,4 @@
-package cs204.project.tournament;
+package cs204.project.Model.Tournament;
 
 import java.util.ArrayList;
 import java.util.List;

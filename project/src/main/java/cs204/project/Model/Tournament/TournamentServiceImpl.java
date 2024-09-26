@@ -1,4 +1,4 @@
-package cs204.project.tournament;
+package cs204.project.Model.Tournament;
 import cs204.project.Model.User.MyAppUser;
 
 import java.util.List;
@@ -43,6 +43,7 @@ public class TournamentServiceImpl implements TournamentService{
     @Override
     public Tournament updateTournament(Long id, Tournament tournament) {
       // TODO Auto-generated method stub
+      
       return null;
     }
 

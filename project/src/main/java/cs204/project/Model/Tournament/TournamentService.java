@@ -1,4 +1,4 @@
-package cs204.project.tournament;
+package cs204.project.Model.Tournament;
 import cs204.project.Model.User.MyAppUser;
 
 import java.util.List;

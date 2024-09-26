@@ -40,7 +40,7 @@ public class ProjectApplication {
         "CREATE TABLE IF NOT EXISTS player(" +
             "ID INT NOT NULL," +
             "PlayerName VARCHAR(50) NOT NULL," +
-            "PW VARCHAR(50) NOT NULL," +
+            "PlayerPW VARCHAR(50) NOT NULL," +
             "UserRole VARCHAR(50) NOT NULL," +
             "CONSTRAINT player_pk PRIMARY KEY (ID)" +
             ")");
@@ -62,7 +62,7 @@ public class ProjectApplication {
             "CONSTRAINT playerrank_pk	PRIMARY KEY (PID, Region)," +
             "CONSTRAINT playerrank_fk	FOREIGN KEY (PID) REFERENCES PLAYER(ID)" +
             ")");
-            
+
     template.execute(
         "CREATE TABLE TOURNAMENTLIST( " +
             "PID			INT			NOT NULL," +

@@ -8,10 +8,7 @@ Content-Type: application/json
   {
     "name": "test2",
     "date": "2024-12-12",
-    "rankRange": [
-      4,
-      7
-    ],
+    "rankRange": [4, 7],
     "status": "open",
     "region": "west",
     "playerList": null

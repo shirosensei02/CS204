@@ -20,7 +20,6 @@ public class ProjectApplication {
     Dotenv dotenv = Dotenv.configure().load();
     System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 
-
 		ApplicationContext ctx = SpringApplication.run(ProjectApplication.class, args);
 
     JdbcTemplate template = ctx.getBean(JdbcTemplate.class);

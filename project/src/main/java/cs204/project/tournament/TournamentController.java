@@ -67,6 +67,15 @@ public class TournamentController {
         return tournament;
     }
 
+
+    @PutMapping("/tournaments/{id}/players/{playerId}")
+    public Tournament addPLayerTournament(@PathVariable Long id, @RequestBody Tournament newTournamentInfo){
+        Tournament tournament = tournamentService.updateTournament(id, newTournamentInfo);
+        if(tournament == null) throw new TournamentNotFoundException(id);
+        
+        return tournament;
+    }
+
     /**
      * Remove a tournament with the DELETE request to "/tournament/{id}"
      * If there is no tournament with the given "id", throw a TournamentNotFoundException

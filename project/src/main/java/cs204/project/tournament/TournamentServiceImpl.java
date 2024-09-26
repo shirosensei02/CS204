@@ -1,5 +1,5 @@
 package cs204.project.tournament;
-
+import cs204.project.Model.User.MyAppUser;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,5 +46,9 @@ public class TournamentServiceImpl implements TournamentService{
       return null;
     }
 
+    @Override
+    public Long joinTournament(MyAppUser player, Tournament tournament) {
+      return tournaments.addPlayer(player, tournament);
+    }
     
 }

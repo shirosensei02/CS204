@@ -1,4 +1,6 @@
 package cs204.project.tournament;
+import cs204.project.Model.User.MyAppUser;
+
 
 import java.util.List;
 import java.util.Optional;

@@ -105,5 +105,7 @@ public class Tournament {
       this.id = id;
     }
 
-    
+    public boolean isPlayerListFull() {
+      return this.getPlayerList().size() >= 32;
+    }
 }

@@ -22,6 +22,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     int update(Player player);
     int deleteById(Long id);
     List<Player> findAll();
+    Optional<Integer> findPlayerRank(Long id, String region);
 
     Optional<Player> findById(Long id);
 

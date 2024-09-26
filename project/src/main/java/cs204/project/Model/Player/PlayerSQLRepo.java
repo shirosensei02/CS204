@@ -2,6 +2,7 @@ package cs204.project.Model.Player;
 
 // package cs204.project.tournament;
 // import cs204.project.Model.User.MyAppUser;
+import cs204.project.Exception.*;
 
 
 import java.util.List;
@@ -94,6 +95,20 @@ public class PlayerSQLRepo implements PlayerRepository {
     }
   }
 
+  @Override
+  public Optional<Integer> findPlayerRank(Long id, String region) {
+    String sql = "SELECT PlayerRank FROM player p inner join tournament t ON p.id = t.id WHERE p.id = ? AND t.region = ?";
+    try {
+      return Optional.ofNullable(
+        jdbcTemplate.queryForObject(sql,
+          (rs, rowNum) -> mapRow(rs, rowNum),
+          id));
+
+    } catch (EmptyResultDataAccessException e) {
+      // book not found - return an empty object
+      return Optional.empty();
+    }
+  }
 
   @Override
   public Long save(Player player) {
@@ -116,19 +131,19 @@ public class PlayerSQLRepo implements PlayerRepository {
 
   @Override
   public int update(Player player) {
-    String sql = "UPDATE tournaments SET PlayerName = ?, PlayerPW = ?, UserRole = ? WHERE id = ?";
+    String sql = "UPDATE tournaments SET PlayerName = ?, PlayerPW = ? WHERE id = ?";
 
     return jdbcTemplate.update((Connection conn) -> {
       PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
     
         setDB(conn, statement, player);
       
-      statement.setLong(7, player.getId());
+      statement.setLong(3, player.getId());
       return statement;
     });
   }
 
-  public PreparedStatement setDB(Connection conn, PreparedStatement statement, MyAppUser player) throws SQLException {
+  public PreparedStatement setDB(Connection conn, PreparedStatement statement, Player player) throws SQLException {
     statement.setString(1, player.getUsername());
     statement.setString(2, player.getPassword());
     statement.setString(3, player.getRole());
@@ -136,30 +151,12 @@ public class PlayerSQLRepo implements PlayerRepository {
   }
 
   public Player mapRow(ResultSet rs, int rowNum) throws SQLException {
-    ObjectMapper objectMapper = new ObjectMapper(); // Jackson ObjectMapper
-
-    // Retrieve the playerList JSON
-    String playerListJson = rs.getString("playerList");
-    List<Long> playerList = new ArrayList<>();
-    if (playerListJson != null && !playerListJson.isEmpty()) {
-      // Convert JSON string to ArrayList<Long>
-      try {
-        Long[] playerArray = objectMapper.readValue(playerListJson, Long[].class);
-        playerList = new ArrayList<>(List.of(playerArray)); // Convert array to ArrayList
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
 
     // Map the ResultSet data to a Tournament object
-    return new Tournament(
+    return new Player(
       rs.getLong("id"),
-      rs.getString("name"),
-      rs.getDate("date").toLocalDate(),
-      Arrays.stream((Integer[]) rs.getArray("rankRange").getArray()).mapToInt(e -> (int) e).toArray(),
-      rs.getString("status"),
-      rs.getString("region"),
-      playerList
+      rs.getString("PlayerName"),
+      rs.getString("PlayerPW")
     );
   }
 }

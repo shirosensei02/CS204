@@ -2,6 +2,7 @@ package cs204.project.Controller;
 
 import cs204.project.Model.Tournament.Tournament;
 import cs204.project.Model.Tournament.TournamentService;
+import cs204.project.Model.Player.*;
 // import cs204.project.Exception.TournamentIsFullException;
 // import cs204.project.Exception.TournamentNotFoundException;
 import cs204.project.Exception.*;
@@ -94,14 +95,21 @@ public class TournamentController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @PutMapping("/tournaments/{id}/player/{pID}")
     public Long joinTournament(@PathVariable long id, @PathVariable long pID, @RequestBody Tournament tournament) {
+      // Is this even needed?
       if (tournament.isPlayerListFull()) {
         throw new TournamentIsFullException(id);
       }
-      if (player.getRank() beyond rankrange of tournament) {
+      int lowerBoundRank = tournament.getRankRange()[0];
+      int upperBoundRank = tournament.getRankRange()[1];
+      int playerRank = PlayerService.getPlayerRank(id, tournament.getRegion());
+
+      if (playerRank < lowerBoundRank && playerRank > upperBoundRank) {
         throw new PlayerRankOOBException(id);
+      } else {
+        return pID; // ID of tournament
       }
 
-      return id; // ID of tournament
+      
     }
     
 }

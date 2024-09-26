@@ -26,6 +26,12 @@ public class Player {
         this.password = password;
     }
 
+    public Player(Long id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
     // Getters and setters
     public Long getId() {
         return id;

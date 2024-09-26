@@ -1,4 +1,4 @@
-package cs204.project.Model.User;
+package cs204.project.Model.Player;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import cs204.project.tournament.Tournament;
+import cs204.project.Model.Tournament.Tournament;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 @Repository
-public interface MyAppUserRepository extends JpaRepository<MyAppUser, Long> {
+public interface PlayerRepository extends JpaRepository<Player, Long> {
 
-    Optional<MyAppUser> findByUsername(String username);
+    Optional<Player> findByUsername(String username);
 
-    Long save(MyAppUser player);
-    int update(MyAppUser player);
+    Player save(Player player);
+    int update(Player player);
     int deleteById(Long id);
-    List<MyAppUser> findAll();
+    List<Player> findAll();
 
-    Optional<MyAppUser> findById(Long id);
+    Optional<Player> findById(Long id);
 
 }

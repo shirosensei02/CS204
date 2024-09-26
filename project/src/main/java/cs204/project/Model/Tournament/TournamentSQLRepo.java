@@ -1,5 +1,6 @@
 package cs204.project.Model.Tournament;
-import cs204.project.Model.User.MyAppUser;
+import cs204.project.Model.Player.Player;
+import cs204.project.Exception.*;
 
 
 import java.util.List;
@@ -9,12 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.sql.Statement;
-import java.sql.Array;
-import java.sql.Connection;
+// import java.sql.Array;
 import java.sql.Date;
 // import java.time.LocalDate;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -22,10 +20,8 @@ import java.sql.SQLException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONArray;
+// import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
@@ -97,7 +93,7 @@ public class TournamentSQLRepo implements TournamentRepository {
     }
   }
 
-  public Long addPlayer(MyAppUser player, Tournament tournament) {
+  public Long addPlayer(Player player, Tournament tournament) {
     //get tournament player list
     // change JSON back to list
     // append player to NEWplayerlist

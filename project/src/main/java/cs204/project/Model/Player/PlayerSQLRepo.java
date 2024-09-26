@@ -1,4 +1,4 @@
-package cs204.project.Model.User;
+package cs204.project.Model.Player;
 
 // package cs204.project.tournament;
 // import cs204.project.Model.User.MyAppUser;
@@ -11,21 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.sql.Statement;
 import java.sql.Array;
-import java.sql.Connection;
 import java.sql.Date;
 // import java.time.LocalDate;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 // import org.json.JSONArray;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import cs204.project.tournament.Tournament;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,7 +31,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 @Repository
-public class MyAppUserSQLRepo implements MyAppUserRepository {
+public class PlayerSQLRepo implements PlayerRepository {
 
   // TODO implement SQL connection here
   @Autowired
@@ -46,7 +39,7 @@ public class MyAppUserSQLRepo implements MyAppUserRepository {
   // for testing
   // List<Tournament> tournaments = new ArrayList<>();
 
-  public MyAppUserSQLRepo(JdbcTemplate jdbcTemplate) {
+  public PlayerSQLRepo(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
   }
 
@@ -78,7 +71,7 @@ public class MyAppUserSQLRepo implements MyAppUserRepository {
   }
 
   @Override
-  public List<Tournament> findAll() {
+  public List<Player> findAll() {
     // TODO change to query all from db
     // return tournaments;
 
@@ -87,7 +80,7 @@ public class MyAppUserSQLRepo implements MyAppUserRepository {
   }
 
   @Override
-  public Optional<MyAppUser> findById(Long id) {
+  public Optional<Player> findById(Long id) {
     try {
       return Optional.ofNullable(
         jdbcTemplate.queryForObject(
@@ -103,7 +96,7 @@ public class MyAppUserSQLRepo implements MyAppUserRepository {
 
 
   @Override
-  public Long save(MyAppUser player) {
+  public Long save(Player player) {
     String sql = "INSERT INTO player (PlayerName, PlayerPW, UserRole) " +
         "VALUES (?, ?, ?) RETURNING id"; // RETURNING id
 
@@ -122,7 +115,7 @@ public class MyAppUserSQLRepo implements MyAppUserRepository {
   }
 
   @Override
-  public int update(MyAppUser player) {
+  public int update(Player player) {
     String sql = "UPDATE tournaments SET PlayerName = ?, PlayerPW = ?, UserRole = ? WHERE id = ?";
 
     return jdbcTemplate.update((Connection conn) -> {
@@ -142,7 +135,7 @@ public class MyAppUserSQLRepo implements MyAppUserRepository {
     return statement;
   }
 
-  public Tournament mapRow(ResultSet rs, int rowNum) throws SQLException {
+  public Player mapRow(ResultSet rs, int rowNum) throws SQLException {
     ObjectMapper objectMapper = new ObjectMapper(); // Jackson ObjectMapper
 
     // Retrieve the playerList JSON

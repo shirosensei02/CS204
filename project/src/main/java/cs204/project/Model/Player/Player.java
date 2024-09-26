@@ -1,4 +1,4 @@
-package cs204.project.Model.User;
+package cs204.project.Model.Player;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class MyAppUser {
+public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +17,11 @@ public class MyAppUser {
     private String role = "ROLE_USER";
 
     // Default constructor
-    public MyAppUser() {
+    public Player() {
     }
 
     // Constructor with parameters
-    public MyAppUser(String username, String password) {
+    public Player(String username, String password) {
         this.username = username;
         this.password = password;
     }

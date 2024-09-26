@@ -1,4 +1,10 @@
-package cs204.project.tournament;
+package cs204.project.Controller;
+
+import cs204.project.Model.Tournament.Tournament;
+import cs204.project.Model.Tournament.TournamentService;
+// import cs204.project.Exception.TournamentIsFullException;
+// import cs204.project.Exception.TournamentNotFoundException;
+import cs204.project.Exception.*;
 
 import java.util.List;
 
@@ -91,8 +97,8 @@ public class TournamentController {
       if (tournament.isPlayerListFull()) {
         throw new TournamentIsFullException(id);
       }
-      if (player.getRank() beyond rank range of tournament) {
-        throw new notAppropriateRankException();
+      if (player.getRank() beyond rankrange of tournament) {
+        throw new PlayerRankOOBException(id);
       }
 
       return id; // ID of tournament

@@ -1,5 +1,5 @@
 package cs204.project.Model.Tournament;
-import cs204.project.Model.User.MyAppUser;
+import cs204.project.Model.Player.Player;
 
 import java.util.List;
 
@@ -26,5 +26,5 @@ public interface TournamentService {
      */
     int deleteTournament(Long id);
 
-    public Long joinTournament(MyAppUser player, Tournament tournament);
+    public Long joinTournament(Player player, Tournament tournament);
 }

@@ -1,4 +1,4 @@
-package cs204.project.Model.User;
+package cs204.project.Model.Player;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,13 +10,13 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class MyAppUserService implements UserDetailsService {
+public class PlayerService implements UserDetailsService {
 
-    private final MyAppUserRepository repository;
+    private final PlayerRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MyAppUser user = repository.findByUsername(username)
+        Player user = repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return User.builder()

@@ -1,4 +1,4 @@
-package cs204.project.tournament;
+package cs204.project.Exception;
 
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.http.HttpStatus;
@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 public class TournamentNotFoundException extends RuntimeException{
   private static final long serialVersionUID = 1L;
 
-  TournamentNotFoundException(Long id) {
+  public TournamentNotFoundException(Long id) {
         super("Could not find tournament " + id);
     }
 }

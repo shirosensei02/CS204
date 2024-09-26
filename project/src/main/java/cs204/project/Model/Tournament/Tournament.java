@@ -1,6 +1,6 @@
 package cs204.project.Model.Tournament;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 // import javax.persistence.GenerationType;
 // import javax.persistence.Id;
 
-import jakarta.annotation.Generated;
+// import jakarta.annotation.Generated;
 
 // @Entity
 public class Tournament {
@@ -41,7 +41,6 @@ public class Tournament {
 
     public Tournament(String name, LocalDate date, 
                     int[] rankRange, String status, String region) {
-      this.id = id;
       this.name = name;
       this.date = date;
       this.rankRange = rankRange;

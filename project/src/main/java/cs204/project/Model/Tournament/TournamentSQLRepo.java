@@ -51,11 +51,12 @@ public class TournamentSQLRepo implements TournamentRepository {
     // Method 1:
     String deleteSQL = "DELETE from tournaments WHERE ID = ?";
     int affectedRows = jdbcTemplate.update(deleteSQL, id);
-    if (affectedRows > 0) {
-      return affectedRows;
-    } else {
-      throw new TournamentNotFoundException(id);
-    }
+    return affectedRows > 0 ? affectedRows : 0;
+    // if (affectedRows > 0) {
+    //   return affectedRows;
+    // } else {
+    //   throw new TournamentNotFoundException(id);
+    // }
     // Method 2:
     // String deleteSQL = "DELETE from tournaments WHERE ID = ?";
     // return jdbcTemplate.update(deleteSQL, id);

@@ -26,5 +26,5 @@ public interface TournamentService {
      */
     int deleteTournament(Long id);
 
-    public Long joinTournament(Player player, Tournament tournament);
+    Long joinTournament(Player player, Tournament tournament);
 }

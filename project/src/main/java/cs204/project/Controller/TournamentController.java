@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TournamentController {
     private TournamentService tournamentService;
+    private PlayerService playerService;
 
-    public TournamentController(TournamentService tournamentService){
+    public TournamentController(TournamentService tournamentService, PlayerService playerService){
       this.tournamentService = tournamentService;
+      this.playerService = playerService;
     }
 
     /**
@@ -101,7 +103,7 @@ public class TournamentController {
       }
       int lowerBoundRank = tournament.getRankRange()[0];
       int upperBoundRank = tournament.getRankRange()[1];
-      int playerRank = PlayerService.getPlayerRank(id, tournament.getRegion());
+      int playerRank = playerService.getPlayerRank(id, tournament.getRegion());
 
       if (playerRank < lowerBoundRank && playerRank > upperBoundRank) {
         throw new PlayerRankOOBException(id);

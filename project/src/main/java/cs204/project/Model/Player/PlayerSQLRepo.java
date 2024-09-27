@@ -46,28 +46,15 @@ public class PlayerSQLRepo implements PlayerRepository {
   @Override
   public int deleteById(Long id) {
     // TODO change to delete from db
-    // int size = tournaments.size();
-    // tournaments.removeIf(tournament -> tournament.getId() == id);
-
-    // Method 1:
     String deleteSQL = "DELETE from player WHERE ID = ?";
     int affectedRows = jdbcTemplate.update(deleteSQL, id);
-    if (affectedRows > 0) {
-      return affectedRows;
-    } else {
-      throw new PlayerNotFoundException(id);
-    }
-    // Method 2:
-    // String deleteSQL = "DELETE from tournaments WHERE ID = ?";
-    // return jdbcTemplate.update(deleteSQL, id);
-
-    // If got delete, num rows deleted returned
-    // If no delete, either by no ID or what, return 0?
-    // So no need handle IDnotFound?
-    //
-
-    // return size - tournaments.size();
-    // return 0;
+    return affectedRows > 0 ? affectedRows : 0;
+    // if (affectedRows > 0) {
+    //   return affectedRows;
+    // } else {
+    //   throw new PlayerNotFoundException(id);
+    // }
+    
   }
 
   @Override
@@ -103,6 +90,23 @@ public class PlayerSQLRepo implements PlayerRepository {
               (rs, rowNum) -> rs.getInt("PlayerRank"),
               id,
               region));
+
+    } catch (EmptyResultDataAccessException e) {
+      // Player not found - return an empty object
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<Player> findByUsername(String username) {
+    String sql = "SELECT * FROM player WHERE PlayerName = ?";
+
+    try {
+      return Optional.ofNullable(
+          jdbcTemplate.queryForObject(
+            sql,
+              (rs, rowNum) -> mapRow(rs, rowNum),
+              username));
 
     } catch (EmptyResultDataAccessException e) {
       // Player not found - return an empty object

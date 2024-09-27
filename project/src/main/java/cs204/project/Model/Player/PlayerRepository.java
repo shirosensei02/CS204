@@ -16,17 +16,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 @Repository
 public interface PlayerRepository /*extends JpaRepository<Player, Long> */{
 
-    Optional<Player> findByUsername(String username);
-
     int deleteById(Long id);
     List<Player> findAll();
     Optional<Player> findById(Long id);
     Optional<Integer> findPlayerRank(Long id, String region);
+    Optional<Player> findByUsername(String username);
     Long save(Player player);
     int update(Player player);
-    
-    
-
-    
 
 }

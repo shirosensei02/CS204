@@ -12,15 +12,15 @@ import cs204.project.Model.Player.PlayerRepository;
 @RestController
 public class UserRegistrationController {
 
-    @Autowired
-    private PlayerRepository userRepository;
+    // @Autowired
+    // private PlayerRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // @Autowired
+    // private PasswordEncoder passwordEncoder;
 
-    @PostMapping(value = "/user/signup", consumes = "application/json")
-    public Player createUser(@RequestBody Player user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
+    // @PostMapping(value = "/user/signup", consumes = "application/json")
+    // public Player createUser(@RequestBody Player user) {
+    //     user.setPassword(passwordEncoder.encode(user.getPassword()));
+    //     return userRepository.save(user);
+    // }
 }

@@ -25,53 +25,55 @@ public class ProjectApplication {
     JdbcTemplate template = ctx.getBean(JdbcTemplate.class);
     TournamentRepository repo = ctx.getBean(TournamentRepository.class);
 
+    // 1.77 quintillion years of weekly tournaments
     template.execute(
         "CREATE TABLE IF NOT EXISTS tournaments (" +
-            "id BIGSERIAL PRIMARY KEY," +
-            "name VARCHAR(255) NOT NULL," +
-            "date DATE NOT NULL," +
-            "rankRange INT[] NOT NULL," +
-            "status VARCHAR(50) NOT NULL," +
-            "region VARCHAR(100) NOT NULL," +
-            "playerList JSON" +
+            "tournament_id          BIGSERIAL PRIMARY KEY," +
+            "tournament_name        VARCHAR(255) NOT NULL," +
+            "tournament_date        DATE NOT NULL," +
+            "tournament_rank_range  INT[] NOT NULL," +
+            "tournament_status      VARCHAR(50) NOT NULL," +
+            "tournament_region      VARCHAR(100) NOT NULL," +
+            "tournament_playerList  JSON NOT NULL" +
+            "CONSTRAINT tournament_pk PRIMARY KEY (tournament_id)" + 
             ")");
-
+    
     template.execute(
         "CREATE TABLE IF NOT EXISTS player(" +
-            "ID INT NOT NULL," +
-            "PlayerName VARCHAR(50) NOT NULL," +
-            "PlayerPW VARCHAR(50) NOT NULL," +
-            "UserRole VARCHAR(50) NOT NULL," +
-            "CONSTRAINT player_pk PRIMARY KEY (ID)" +
+            "player_id    BIGSERIAL   NOT NULL," +
+            "player_name  VARCHAR(50) NOT NULL," +
+            "player_pw    VARCHAR(50) NOT NULL," +
+            "user_role    VARCHAR(50) NOT NULL," +
+            "CONSTRAINT player_pk PRIMARY KEY (player_id)" +
             ")");
 
     template.execute(
         "CREATE TABLE IF NOT EXISTS administrator(" +
-            "ID INT NOT NULL," +
-            "AdminName VARCHAR(50) NOT NULL," +
-            "PW VARCHAR(50) NOT NULL," +
-            "UserRole VARCHAR(50) NOT NULL," +
-            "CONSTRAINT admin_pk PRIMARY KEY (ID)" +
+            "admin_id   BIGSERIAL   NOT NULL," +
+            "admin_name VARCHAR(50) NOT NULL," +
+            "admin_pw   VARCHAR(50) NOT NULL," +
+            "user_role  VARCHAR(50) NOT NULL," +
+            "CONSTRAINT player_pk PRIMARY KEY (admin_id)" +
             ")");
 
     template.execute(
-        "CREATE TABLE PLAYERRANK(" +
-            "PID			INT			NOT NULL," +
-            "Region		VARCHAR(50)	NOT NULL," +
-            "PlayerRank	VARCHAR(50)	NOT NULL," +
-            "CONSTRAINT playerrank_pk	PRIMARY KEY (PID, Region)," +
-            "CONSTRAINT playerrank_fk	FOREIGN KEY (PID) REFERENCES PLAYER(ID)" +
+        "CREATE TABLE player_rank(" +
+            "PID			LONG			NOT NULL," +
+            "region		VARCHAR(50)	NOT NULL," +
+            "player_rank	VARCHAR(50)	NOT NULL," +
+            "CONSTRAINT playerrank_pk	PRIMARY KEY (PID, region)," +
+            "CONSTRAINT playerrank_fk	FOREIGN KEY (PID) REFERENCES PLAYER(player_id)" +
             ")");
 
     template.execute(
         "CREATE TABLE TOURNAMENTLIST( " +
-            "PID			INT			NOT NULL," +
+            "PID			LONG			NOT NULL," +
             "Region		VARCHAR(50)	NOT NULL," +
-            "TID			INT			NOT NULL," +
+            "TID			LONG			NOT NULL," +
             "TournStatus VARCHAR(50)	NOT NULL," +
             "CONSTRAINT tlist_pk		PRIMARY KEY(PID, Region, TID)," +
-            "CONSTRAINT tlist_fk1	FOREIGN KEY (PID) REFERENCES PLAYER(ID)," +
-            "CONSTRAINT tlist_fk2	FOREIGN KEY (TID) REFERENCES TOURNAMENT(TournID)" +
+            "CONSTRAINT tlist_fk1	FOREIGN KEY (PID) REFERENCES PLAYER(player_id)," +
+            "CONSTRAINT tlist_fk2	FOREIGN KEY (TID) REFERENCES TOURNAMENT(tournament_id)" +
             ")");
 
     // List<Tournament> listTournaments = Arrays.asList(

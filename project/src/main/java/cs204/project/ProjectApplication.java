@@ -47,7 +47,7 @@
 
 package cs204.project;
 
-import org.springframework.context.ApplicationContext;
+// import org.springframework.context.ApplicationContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -56,7 +56,7 @@ public class ProjectApplication {
 
 	public static void main(String[] args) {
 		// Start the Spring Boot application
-		ApplicationContext ctx = SpringApplication.run(ProjectApplication.class, args);
+		SpringApplication.run(ProjectApplication.class, args);
 
 		// No tournament-related operations as we are focusing on login page testing
 

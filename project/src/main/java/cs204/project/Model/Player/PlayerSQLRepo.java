@@ -4,7 +4,6 @@ package cs204.project.Model.Player;
 // import cs204.project.Model.User.MyAppUser;
 import cs204.project.Exception.*;
 
-
 import java.util.List;
 import java.util.Optional;
 import java.sql.Connection;
@@ -61,11 +60,11 @@ public class PlayerSQLRepo implements PlayerRepository {
     // Method 2:
     // String deleteSQL = "DELETE from tournaments WHERE ID = ?";
     // return jdbcTemplate.update(deleteSQL, id);
-    
+
     // If got delete, num rows deleted returned
     // If no delete, either by no ID or what, return 0?
     // So no need handle IDnotFound?
-    // 
+    //
 
     // return size - tournaments.size();
     // return 0;
@@ -74,9 +73,8 @@ public class PlayerSQLRepo implements PlayerRepository {
   @Override
   public List<Player> findAll() {
     // TODO change to query all from db
-    // return tournaments;
 
-    return jdbcTemplate.query("SELECT * from tournaments",
+    return jdbcTemplate.query("SELECT * from player",
         (rs, rownum) -> mapRow(rs, rownum));
   }
 
@@ -84,13 +82,13 @@ public class PlayerSQLRepo implements PlayerRepository {
   public Optional<Player> findById(Long id) {
     try {
       return Optional.ofNullable(
-        jdbcTemplate.queryForObject(
-          "SELECT * FROM player WHERE id = ?",
-          (rs, rowNum) -> mapRow(rs, rowNum),
-          id));
+          jdbcTemplate.queryForObject(
+              "SELECT * FROM player WHERE id = ?",
+              (rs, rowNum) -> mapRow(rs, rowNum),
+              id));
 
     } catch (EmptyResultDataAccessException e) {
-      // book not found - return an empty object
+      // Player not found - return an empty object
       return Optional.empty();
     }
   }
@@ -100,12 +98,14 @@ public class PlayerSQLRepo implements PlayerRepository {
     String sql = "SELECT PlayerRank FROM player p inner join tournament t ON p.id = t.id WHERE p.id = ? AND t.region = ?";
     try {
       return Optional.ofNullable(
-        jdbcTemplate.queryForObject(sql,
-          (rs, rowNum) -> mapRow(rs, rowNum),
-          id));
+          jdbcTemplate.queryForObject(
+              sql,
+              (rs, rowNum) -> rs.getInt("PlayerRank"),
+              id,
+              region));
 
     } catch (EmptyResultDataAccessException e) {
-      // book not found - return an empty object
+      // Player not found - return an empty object
       return Optional.empty();
     }
   }
@@ -119,8 +119,8 @@ public class PlayerSQLRepo implements PlayerRepository {
     jdbcTemplate.update((Connection conn) -> {
       PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-        setDB(conn, statement, player);
-      
+      setDB(conn, statement, player);
+
       return statement;
     }, holder);
 
@@ -135,9 +135,9 @@ public class PlayerSQLRepo implements PlayerRepository {
 
     return jdbcTemplate.update((Connection conn) -> {
       PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-    
-        setDB(conn, statement, player);
-      
+
+      setDB(conn, statement, player);
+
       statement.setLong(3, player.getId());
       return statement;
     });
@@ -154,9 +154,8 @@ public class PlayerSQLRepo implements PlayerRepository {
 
     // Map the ResultSet data to a Tournament object
     return new Player(
-      rs.getLong("id"),
-      rs.getString("PlayerName"),
-      rs.getString("PlayerPW")
-    );
+        rs.getLong("id"),
+        rs.getString("PlayerName"),
+        rs.getString("PlayerPW"));
   }
 }

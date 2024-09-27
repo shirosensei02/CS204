@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import cs204.project.Model.Player.Player;
-import cs204.project.Model.Player.PlayerRepository;
+
+import cs204.project.Model.Player.*;
 
 @RestController
 public class UserRegistrationController {
@@ -15,12 +15,15 @@ public class UserRegistrationController {
     // @Autowired
     // private PlayerRepository userRepository;
 
-    // @Autowired
-    // private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PlayerService players;
 
-    // @PostMapping(value = "/user/signup", consumes = "application/json")
-    // public Player createUser(@RequestBody Player user) {
-    //     user.setPassword(passwordEncoder.encode(user.getPassword()));
-    //     return userRepository.save(user);
-    // }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping(value = "/user/signup", consumes = "application/json")
+    public Player createUser(@RequestBody Player user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return players.addPlayer(user);
+    }
 }

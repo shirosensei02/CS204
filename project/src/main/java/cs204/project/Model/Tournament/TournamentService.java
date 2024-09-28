@@ -1,30 +1,57 @@
-package cs204.project.Model.Tournament;
-import cs204.project.Model.Player.Player;
+package cs204.project.model.tournament;
+import cs204.project.model.player.Player;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface TournamentService {
-    List<Tournament> getTournamentList();
-    Tournament getTournament(Long id);
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-    // return newly added tournament
-    Tournament addTournament(Tournament tournament);
+@Service
+public class TournamentService {
 
-    /**  return updated tournament
-    @param id
-    @param tournament
-    @return
-    */ 
-    Tournament updateTournament(Long id, Tournament tournament);
+    @Autowired
+    private TournamentRepository tournaments;
 
-    /**
-     * return status of delete
-     * 1 if remove
-     * 0 if does not exist
-     * @param id
-     * @return
-     */
-    int deleteTournament(Long id);
+    public TournamentService(TournamentRepository tournaments){
+      this.tournaments = tournaments;
+    }
 
-    Long joinTournament(Player player, Tournament tournament);
+    public List<Tournament> getTournamentList() {
+      return tournaments.findAll();
+    }
+
+    
+    public Tournament addTournament(Tournament tournament) {
+      tournament.setId(tournaments.save(tournament));
+      return tournament;
+    }
+
+    
+    public int deleteTournament(Long id) {
+      return tournaments.deleteById(id);
+    }
+
+    
+    public Tournament getTournament(Long id) {
+      Optional<Tournament> t = tournaments.findById(id);
+
+      if (t.isPresent()){
+        return t.get();
+      }
+      return null;
+    }
+
+    
+    public Tournament updateTournament(Long id, Tournament tournament) {
+      // TODO Auto-generated method stub
+      
+      return null;
+    }
+
+    
+    public Long joinTournament(Player player, Tournament tournament) {
+      return tournaments.addPlayer(player, tournament);
+    }
+    
 }

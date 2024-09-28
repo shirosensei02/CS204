@@ -10,10 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // import org.springframework.web.bind.annotation.*;
 // import org.springframework.dao.EmptyResultDataAccessException;
 
-public interface TournamentRepository extends JpaRepository<Tournament, Long>{
-
+public interface CustomTournamentRepository {
     Long addPlayer(Player player, Tournament tournament);
     int update(Tournament tournament);
     int deleteById(Long id);
-    
 }
+

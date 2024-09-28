@@ -1,29 +1,35 @@
-package cs204.project.Model.Tournament;
+package cs204.project.model.tournament;
 
 // import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
-// import javax.persistence.Entity;
-// import javax.persistence.GeneratedValue;
-// import javax.persistence.GenerationType;
-// import javax.persistence.Id;
+// import javax.persistence.*;
 
 // import jakarta.annotation.Generated;
+import jakarta.persistence.*;
 
-// @Entity
+@Entity
+@Table(name = "tournaments")
 public class Tournament {
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // or GenerationType.IDENTITY
     private Long id;
 
+    @Column(name = "name", unique = true, nullable = false) // name unique or not?
     private String name;
+    @Column(name = "date", nullable = false)
     private LocalDate date;
+    @Column(name = "rank_range", nullable = false)
     private int[] rankRange;
+    @Column(name = "status", nullable = false)
     private String status;
+    @Column(name = "region", nullable = false)
     private String region;
+    @Column(name = "player_list", nullable = false)
     private List<Long> playerList;
 
+    // Constructors
     public Tournament() {
     }
     
@@ -59,6 +65,7 @@ public class Tournament {
       this.playerList = playerList;
     }
 
+    // Getter setters
     public String getName() {
       return name;
     }

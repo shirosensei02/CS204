@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import cs204.project.Entity.User;
-import cs204.project.Service.UserDetaillServiceImpl;
+import cs204.project.Service.UserDetailService;
+
 
 @Controller
 public class SignupController {
 
     @Autowired
-    private UserDetaillServiceImpl userService;
+    private UserDetailService userService;
 
     @GetMapping("/signup")
     public String signupForm(Model model) {

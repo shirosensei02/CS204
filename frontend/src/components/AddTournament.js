@@ -5,47 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 function AddTournament() {
-//  const [account, setAccount] = useState([]);
- // const [username, setuName] = useState("");
- // const [password, setPword] = useState("");
-
-
-  // const bcrypt = require('bcryptjs');
-
-  // function hashPassword(password) {
-  //   const saltRounds = 10;
-  //   return bcrypt.hashSync(password, saltRounds);
-  // }
-
-  // const handleAddAccount = async (event) => {
-  //   event.preventDefault();
-  //   if (username && password) {
-  //     try {
-  //       const hpassword = hashPassword(password);
-
-  //       alert(username + hpassword);
-
-  //       const newAccount = {
-  //         username: username,
-  //         password: hpassword
-
-  //       };
-
-  //       // Await the axios.post call
-  //       const response = await axios.post('http://localhost:8080/tournaments', newAccount, { withCredentials: true });
-  //       console.log(response);
-  //       setAccount([account, response.data]);
-  //       setuName('');  // Clear the input fields
-  //       setPword('');
-  //       alert("Response: " + response.data);
-  //     } catch (error) {
-  //       console.error("There was an error adding the person!", error);
-  //     }
-  //   }
-  // };
-
-
-
   const [tname, setTname] = useState("");
   const [tdate, setTdate] = useState("");
   const [tregion, setTregion] = useState("asia");

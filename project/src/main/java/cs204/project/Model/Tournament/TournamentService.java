@@ -23,8 +23,9 @@ public class TournamentService {
 
     
     public Tournament addTournament(Tournament tournament) {
-      tournament.setId(tournaments.save(tournament));
-      return tournament;
+      // tournament.setId(tournaments.save(tournament));
+
+      return tournaments.save(tournament);
     }
 
     

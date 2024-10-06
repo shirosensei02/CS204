@@ -1,4 +1,4 @@
-package cs204.project.Model.Admin;
+package cs204.project.model.admin;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package cs204.project.Model.Player;
+package cs204.project.model.Player;
 
 // package cs204.project.tournament;
 // import cs204.project.Model.User.MyAppUser;

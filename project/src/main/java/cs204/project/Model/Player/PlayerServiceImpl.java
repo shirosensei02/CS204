@@ -1,4 +1,4 @@
-package cs204.project.Model.Player;
+package cs204.project.model.Player;
 
 import java.util.Optional;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import cs204.project.Model.Tournament.Tournament;
+import cs204.project.model.tournament.Tournament;
 import lombok.AllArgsConstructor;
 
 @Service

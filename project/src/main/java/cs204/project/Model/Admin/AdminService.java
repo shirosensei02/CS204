@@ -1,4 +1,4 @@
-package cs204.project.Model.Admin;
+package cs204.project.model.admin;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

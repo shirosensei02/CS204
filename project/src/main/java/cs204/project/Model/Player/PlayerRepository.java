@@ -1,16 +1,15 @@
-package cs204.project.Model.Player;
+package cs204.project.model.Player;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import cs204.project.Model.Tournament.Tournament;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import cs204.project.model.tournament.Tournament;
+
 import org.springframework.dao.EmptyResultDataAccessException;
 
 @Repository

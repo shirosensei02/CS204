@@ -1,4 +1,4 @@
-package cs204.project.model.player;
+package cs204.project.model.Player;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

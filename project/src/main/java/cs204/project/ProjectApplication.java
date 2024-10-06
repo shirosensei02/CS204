@@ -4,10 +4,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
-import io.github.cdimascio.dotenv.Dotenv;
 
-import cs204.project.Model.Tournament.Tournament;
-import cs204.project.Model.Tournament.TournamentRepository;
+import cs204.project.model.tournament.Tournament;
+import cs204.project.model.tournament.TournamentRepository;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.List;
 import java.util.Arrays;

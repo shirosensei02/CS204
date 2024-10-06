@@ -1,11 +1,11 @@
 package cs204.project.Controller;
 
-import cs204.project.Model.Tournament.Tournament;
-import cs204.project.Model.Tournament.TournamentService;
-import cs204.project.Model.Player.*;
 // import cs204.project.Exception.TournamentIsFullException;
 // import cs204.project.Exception.TournamentNotFoundException;
 import cs204.project.Exception.*;
+import cs204.project.model.Player.*;
+import cs204.project.model.tournament.Tournament;
+import cs204.project.model.tournament.TournamentService;
 
 import java.util.List;
 

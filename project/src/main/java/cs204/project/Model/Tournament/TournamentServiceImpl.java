@@ -65,6 +65,19 @@ public class TournamentServiceImpl implements TournamentService{
       return null;
       // return tournaments.addPlayer(player, tournament);
     }
+    // Throw ???
+    public Tournament removePlayerFromTournament(Long tId, Long pId) {
+      Optional<Tournament> t = tournaments.findById(tId);
+      if (t.isPresent()) {
+        Tournament tournament = t.get();
+        List<Long> currentPlayerList = tournament.getPlayerList();
+        currentPlayerList.remove(pId);
+        tournament.setPlayerList(currentPlayerList);
+        return tournament;
+      }
+      return null;
+      // return tournaments.addPlayer(player, tournament);
+    }
 
     @Override
     public Tournament findTournamentByDate(LocalDate date) {
@@ -83,4 +96,8 @@ public class TournamentServiceImpl implements TournamentService{
     //   Optional<Tournament> t = tournaments.findById(id);
     //   return t.isPresent() ? t.get().getPlayerList() : null;
     // }
+    @Override
+    public void isTournamentValid(Long tId) {
+      
+    }
 }

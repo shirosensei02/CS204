@@ -87,4 +87,20 @@ public class TournamentController {
 
   }
 
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @PutMapping("/tournaments/{id}/player/{pID}")
+  public Long leaveTournament(@PathVariable long id, @PathVariable long pId /* , @RequestBody Tournament tournament */) {
+
+    Tournament tournament = tournamentService.getTournament(id);
+    // check date valid / status
+    try {
+      
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
+    
+      tournamentService.updateTournament(id, tournamentService.removePlayerFromTournament(id, pId));
+      return pId; // ID of tournament
+    }
+
 }

@@ -28,7 +28,9 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long>{
     // Tournament findTournamentById(Long id);
 
     public Optional<Tournament> findTournamentByDate(LocalDate date);
-    public Optional<Tournament> findTournamentByName(String name)
+    public Optional<Tournament> findTournamentByName(String name);
+    public Optional<Tournament> findTournamentByStatus(Boolean status);
+    public Optional<Tournament> findTournamentByRankRange(int[] rankRange);
     
     // int update(Tournament tournament);
     // @Query(value = "SELECT * FROM tournament t inner join player p on t.region = p.region where p.id = ?1", nativeQuery = true)

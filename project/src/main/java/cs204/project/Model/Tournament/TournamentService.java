@@ -11,6 +11,7 @@ public interface TournamentService {
     public Tournament addPlayerToTournament(Long tId, Long PId);
     public Tournament findTournamentByDate(LocalDate date);
     public Tournament findTournamentByName(String name);
+    public void isTournamentValid(Long tId);
 }
 
 

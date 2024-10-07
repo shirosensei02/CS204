@@ -22,8 +22,16 @@ public class Tournament {
     private LocalDate date;
     @Column(name = "rank_range", nullable = false)
     private int[] rankRange;
+    
+    private enum Level {
+      CLOSED,
+      OPEN,
+      ACTIVE
+    }
     @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated // Apparently should be @EnumeratedString
+    private Level status; // use enum
+
     @Column(name = "region", nullable = false)
     private String region;
     @Column(name = "player_list", nullable = false)

@@ -1,6 +1,7 @@
 package cs204.project.model.tournament;
 import cs204.project.model.player.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,8 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long>{
     // TournamentPlayersProjection findPlayersJsonById(@Param("id") Long id);
     // Tournament findTournamentById(Long id);
 
-
+    public Optional<Tournament> findTournamentByDate(LocalDate date);
+    public Optional<Tournament> findTournamentByName(String name)
     
     // int update(Tournament tournament);
     // @Query(value = "SELECT * FROM tournament t inner join player p on t.region = p.region where p.id = ?1", nativeQuery = true)

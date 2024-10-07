@@ -6,6 +6,7 @@ import cs204.project.exception.*;
 // import cs204.project.model.player.*;
 // import User-repo.src.main.java.cs204.project.model.player;
 import cs204.project.model.tournament.Tournament;
+import cs204.project.model.tournament.Tournament.Status;
 import cs204.project.model.tournament.TournamentServiceImpl;
 
 import java.util.List;
@@ -93,10 +94,8 @@ public class TournamentController {
 
     Tournament tournament = tournamentService.getTournament(id);
     // check date valid / status
-    try {
+    if (tournament.getStatus() == Status.CLOSED) {
       
-    } catch (Exception e) {
-      // TODO: handle exception
     }
     
       tournamentService.updateTournament(id, tournamentService.removePlayerFromTournament(id, pId));

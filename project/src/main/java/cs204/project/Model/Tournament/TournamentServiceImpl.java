@@ -35,21 +35,24 @@ public class TournamentServiceImpl implements TournamentService{
     
     public Tournament getTournament(Long id) {
       Optional<Tournament> t = tournaments.findById(id);
+      return t.isPresent() ? t.get() : null;
+    }
 
-      if (t.isPresent()){
-        return t.get();
-      }
-      return null;
+    @Override
+    public Tournament findTournamentByDate(LocalDate date) {
+      Optional<Tournament> t = tournaments.findTournamentByDate(date);
+      return t.isPresent() ? t.get() : null;
+    }
+
+    @Override
+    public Tournament findTournamentByName(String name) {
+      Optional<Tournament> t = tournaments.findTournamentByName(name);
+      return t.isPresent() ? t.get() : null;
     }
 
     public Tournament updateTournament(Long id, Tournament tournament) throws TournamentNotFoundException{
       Optional<Tournament> t = tournaments.findById(id);
-
-      if (t.isPresent()) {
-        return tournaments.save(tournament);
-      } else {
-        throw new TournamentNotFoundException(id);
-      }
+      return t.isPresent() ? tournaments.save(tournament) : null;
     }
 
     
@@ -63,9 +66,8 @@ public class TournamentServiceImpl implements TournamentService{
         return tournament;
       }
       return null;
-      // return tournaments.addPlayer(player, tournament);
     }
-    // Throw ???
+
     public Tournament removePlayerFromTournament(Long tId, Long pId) {
       Optional<Tournament> t = tournaments.findById(tId);
       if (t.isPresent()) {
@@ -76,26 +78,10 @@ public class TournamentServiceImpl implements TournamentService{
         return tournament;
       }
       return null;
-      // return tournaments.addPlayer(player, tournament);
     }
 
-    @Override
-    public Tournament findTournamentByDate(LocalDate date) {
-      // TODO Auto-generated method stub
-      Optional<Tournament> t = tournaments.findTournamentByDate(date);
-      return t.isPresent() ? t.get() : null;
-    }
+    
 
-    @Override
-    public Tournament findTournamentByName(String name) {
-      Optional<Tournament> t = tournaments.findTournamentByName(name);
-      return t.isPresent() ? t.get() : null;
-    }
-    // @Override
-    // public List<Long> getPlayerListByTId(Long id) {
-    //   Optional<Tournament> t = tournaments.findById(id);
-    //   return t.isPresent() ? t.get().getPlayerList() : null;
-    // }
     @Override
     public void isTournamentValid(Long tId) {
       

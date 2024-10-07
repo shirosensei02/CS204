@@ -23,14 +23,14 @@ public class Tournament {
     @Column(name = "rank_range", nullable = false)
     private int[] rankRange;
     
-    private enum Level {
+    public enum Status {
       CLOSED,
       OPEN,
       ACTIVE
     }
     @Column(name = "status", nullable = false)
-    @Enumerated // Apparently should be @EnumeratedString
-    private Level status; // use enum
+    @Enumerated(EnumType.STRING) // Apparently should be @EnumeratedString
+    private Status status; // use enum
 
     @Column(name = "region", nullable = false)
     private String region;
@@ -42,7 +42,7 @@ public class Tournament {
     }
     
     public Tournament(Long id, String name, LocalDate date, 
-                    int[] rankRange, String status, String region, 
+                    int[] rankRange, Status status, String region, 
                     List<Long> playerList) {
       this.id = id;
       this.name = name;
@@ -54,7 +54,7 @@ public class Tournament {
     }
 
     public Tournament(String name, LocalDate date, 
-                    int[] rankRange, String status, String region) {
+                    int[] rankRange, Status status, String region) {
       this.name = name;
       this.date = date;
       this.rankRange = rankRange;
@@ -63,7 +63,7 @@ public class Tournament {
     }
 
     public Tournament(String name, LocalDate date, 
-        int[] rankRange, String status, String region, 
+        int[] rankRange, Status status, String region, 
         List<Long> playerList) {
       this.name = name;
       this.date = date;
@@ -92,10 +92,10 @@ public class Tournament {
     public void setRankRange(int[] rankRange) {
       this.rankRange = rankRange;
     }
-    public String getStatus() {
+    public Status getStatus() {
       return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
       this.status = status;
     }
     public String getRegion() {

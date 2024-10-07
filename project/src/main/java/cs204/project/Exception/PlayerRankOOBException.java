@@ -8,6 +8,6 @@ public class PlayerRankOOBException extends RuntimeException{
   private static final long serialVersionUID = 3L;
 
   public PlayerRankOOBException(Long id) {
-        super("Full Player List for tournament " + id);
+        super("Inelligible rank range for tournament" + id);
     }
 }

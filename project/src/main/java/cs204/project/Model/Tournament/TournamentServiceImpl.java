@@ -29,7 +29,7 @@ public class TournamentServiceImpl implements TournamentService{
       return tournaments.save(tournament);
     }
     
-    public void deleteTournament(Long id) throws EmptyResultDataAccessException {
+    public void deleteTournament(Long id) {
       tournaments.deleteById(id);
     }
     
@@ -79,8 +79,6 @@ public class TournamentServiceImpl implements TournamentService{
       }
       return null;
     }
-
-    
 
     @Override
     public void isTournamentValid(Long tId) {

@@ -47,6 +47,7 @@ public class TournamentController {
     return tournamentService.addTournament(tournament);
   }
 
+  // Does updateTournament throw anything
   @PutMapping("/tournaments/{id}")
   public Tournament updateTournament(@PathVariable Long id, @RequestBody Tournament newTournamentInfo) {
     Tournament tournament = tournamentService.updateTournament(id, newTournamentInfo);
@@ -75,6 +76,9 @@ public class TournamentController {
       throw new TournamentIsFullException(id);
     }
     // check date valid / tournament still open
+    // Check tournament is OPEN
+    // Check tournament does not already have player
+
     int lowerBoundRank = tournament.getRankRange()[0];
     int upperBoundRank = tournament.getRankRange()[1];
     int playerRank = playerService.getPlayerRank(id, tournament.getRegion());
@@ -94,9 +98,12 @@ public class TournamentController {
 
     Tournament tournament = tournamentService.getTournament(id);
     // check date valid / status
+    // Check tournament is OPEN
     if (tournament.getStatus() == Status.CLOSED) {
       
     }
+    // Check if player exists
+    // Is this really needed if UI will grey out the option box
     
       tournamentService.updateTournament(id, tournamentService.removePlayerFromTournament(id, pId));
       return pId; // ID of tournament

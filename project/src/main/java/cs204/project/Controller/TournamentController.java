@@ -1,14 +1,16 @@
-package cs204.project.Controller;
+package cs204.project.controller;
 
 // import cs204.project.Exception.TournamentIsFullException;
 // import cs204.project.Exception.TournamentNotFoundException;
-import cs204.project.Exception.*;
-import cs204.project.model.Player.*;
+import cs204.project.exception.*;
+// import cs204.project.model.player.*;
+import Matchmaking-repo.src.main.java.cs204.project.model.player;
 import cs204.project.model.tournament.Tournament;
-import cs204.project.model.tournament.TournamentService;
+import cs204.project.model.tournament.TournamentServiceImpl;
 
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TournamentController {
-    private TournamentService tournamentService;
+    private TournamentServiceImpl tournamentService;
     private PlayerService playerService;
 
-    public TournamentController(TournamentService tournamentService, PlayerService playerService){
+    public TournamentController(TournamentServiceImpl tournamentService, PlayerService playerService){
       this.tournamentService = tournamentService;
       this.playerService = playerService;
     }
@@ -72,7 +74,6 @@ public class TournamentController {
     public Tournament updateTournament(@PathVariable Long id, @RequestBody Tournament newTournamentInfo){
         Tournament tournament = tournamentService.updateTournament(id, newTournamentInfo);
         if(tournament == null) throw new TournamentNotFoundException(id);
-        
         return tournament;
     }
 
@@ -84,13 +85,13 @@ public class TournamentController {
      */
     @DeleteMapping("/tournaments/{id}")
     public void deleteTournament(@PathVariable long id) {
-      if (tournamentService.deleteTournament(id) == 0)
-        throw new TournamentNotFoundException(id);
-        // try{
-        //   tournamentService.deleteTournament(id);
-        // } catch (EmptyResultDataAccessException e) {
-        //   throw new TournamentNotFoundException(id)
-        // }
+      // if (tournamentService.deleteTournament(id) == 0)
+      //   throw new TournamentNotFoundException(id);
+        try{
+          tournamentService.deleteTournament(id);
+        } catch (EmptyResultDataAccessException e) {
+          throw new TournamentNotFoundException(id);
+        }
         
     }
 

@@ -22,13 +22,17 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long>{
 
     // Long addPlayer(Player player, Tournament tournament);
     // Long removePlayer(Player player, Tournament tournament);
+    // @Query("SELECT t FROM Tournament t WHERE t.id = :id")
+    // TournamentPlayersProjection findPlayersJsonById(@Param("id") Long id);
+    // Tournament findTournamentById(Long id);
+
 
     
-    int update(Tournament tournament);
-    @Query(value = "SELECT * FROM tournament t inner join player p on t.region = p.region where p.id = ?1", nativeQuery = true)
-    // find the player's match history based on region played
-    int deleteById(Long id);
+    // int update(Tournament tournament);
+    // @Query(value = "SELECT * FROM tournament t inner join player p on t.region = p.region where p.id = ?1", nativeQuery = true)
+    // // find the player's match history based on region played
+    // int deleteById(Long id);
     
-    @Query("SELECT COUNT(t) FROM Tournament t WHERE t.region = :region")
-    long countByRegion(@Param("region") String region);
+    // @Query("SELECT COUNT(t) FROM Tournament t WHERE t.region = :region")
+    // long countByRegion(@Param("region") String region);
 }

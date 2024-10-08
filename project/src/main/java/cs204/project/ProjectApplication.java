@@ -38,43 +38,43 @@ public class ProjectApplication {
             "CONSTRAINT tournament_pk PRIMARY KEY (tournament_id)" + 
             ")");
     
-    template.execute(
-        "CREATE TABLE IF NOT EXISTS player(" +
-            "player_id    BIGSERIAL   NOT NULL," +
-            "player_name  VARCHAR(50) NOT NULL," +
-            "player_pw    VARCHAR(50) NOT NULL," +
-            "user_role    VARCHAR(50) NOT NULL," +
-            "CONSTRAINT player_pk PRIMARY KEY (player_id)" +
-            ")");
+    // template.execute(
+    //     "CREATE TABLE IF NOT EXISTS player(" +
+    //         "player_id    BIGSERIAL   NOT NULL," +
+    //         "player_name  VARCHAR(50) NOT NULL," +
+    //         "player_pw    VARCHAR(50) NOT NULL," +
+    //         "user_role    VARCHAR(50) NOT NULL," +
+    //         "CONSTRAINT player_pk PRIMARY KEY (player_id)" +
+    //         ")");
 
-    template.execute(
-        "CREATE TABLE IF NOT EXISTS administrator(" +
-            "admin_id   BIGSERIAL   NOT NULL," +
-            "admin_name VARCHAR(50) NOT NULL," +
-            "admin_pw   VARCHAR(50) NOT NULL," +
-            "user_role  VARCHAR(50) NOT NULL," +
-            "CONSTRAINT player_pk PRIMARY KEY (admin_id)" +
-            ")");
+    // template.execute(
+    //     "CREATE TABLE IF NOT EXISTS administrator(" +
+    //         "admin_id   BIGSERIAL   NOT NULL," +
+    //         "admin_name VARCHAR(50) NOT NULL," +
+    //         "admin_pw   VARCHAR(50) NOT NULL," +
+    //         "user_role  VARCHAR(50) NOT NULL," +
+    //         "CONSTRAINT player_pk PRIMARY KEY (admin_id)" +
+    //         ")");
 
-    template.execute(
-        "CREATE TABLE player_rank(" +
-            "PID			LONG			NOT NULL," +
-            "region		VARCHAR(50)	NOT NULL," +
-            "player_rank	VARCHAR(50)	NOT NULL," +
-            "CONSTRAINT playerrank_pk	PRIMARY KEY (PID, region)," +
-            "CONSTRAINT playerrank_fk	FOREIGN KEY (PID) REFERENCES PLAYER(player_id)" +
-            ")");
+    // template.execute(
+    //     "CREATE TABLE player_rank(" +
+    //         "PID			LONG			NOT NULL," +
+    //         "region		VARCHAR(50)	NOT NULL," +
+    //         "player_rank	VARCHAR(50)	NOT NULL," +
+    //         "CONSTRAINT playerrank_pk	PRIMARY KEY (PID, region)," +
+    //         "CONSTRAINT playerrank_fk	FOREIGN KEY (PID) REFERENCES PLAYER(player_id)" +
+    //         ")");
 
-    template.execute(
-        "CREATE TABLE TOURNAMENTLIST( " +
-            "PID			LONG			NOT NULL," +
-            "Region		VARCHAR(50)	NOT NULL," +
-            "TID			LONG			NOT NULL," +
-            "TournStatus VARCHAR(50)	NOT NULL," +
-            "CONSTRAINT tlist_pk		PRIMARY KEY(PID, Region, TID)," +
-            "CONSTRAINT tlist_fk1	FOREIGN KEY (PID) REFERENCES PLAYER(player_id)," +
-            "CONSTRAINT tlist_fk2	FOREIGN KEY (TID) REFERENCES TOURNAMENT(tournament_id)" +
-            ")");
+    // template.execute(
+    //     "CREATE TABLE TOURNAMENTLIST( " +
+    //         "PID			LONG			NOT NULL," +
+    //         "Region		VARCHAR(50)	NOT NULL," +
+    //         "TID			LONG			NOT NULL," +
+    //         "TournStatus VARCHAR(50)	NOT NULL," +
+    //         "CONSTRAINT tlist_pk		PRIMARY KEY(PID, Region, TID)," +
+    //         "CONSTRAINT tlist_fk1	FOREIGN KEY (PID) REFERENCES PLAYER(player_id)," +
+    //         "CONSTRAINT tlist_fk2	FOREIGN KEY (TID) REFERENCES TOURNAMENT(tournament_id)" +
+    //         ")");
 
     // List<Tournament> listTournaments = Arrays.asList(
     // new Tournament("t1", LocalDate.of(2024, 9, 23), new int[]{1,2}, "open",
@@ -84,8 +84,12 @@ public class ProjectApplication {
     // );
 
     List<Tournament> listTournaments = Arrays.asList(
-        new Tournament("t1", LocalDate.of(2024, 9, 23), new int[] { 1, 2 }, "open", "asia"),
-        new Tournament("t2", LocalDate.of(2024, 9, 23), new int[] { 3, 6 }, "open", "west"));
+        new Tournament("t1", LocalDate.of(2024, 9, 23), new int[] { 1, 2 }, Tournament.Status.CLOSED, "asia"),
+        new Tournament("t2", LocalDate.of(2024, 9, 26), new int[] { 3, 6 }, Tournament.Status.CLOSED, "west"), 
+        new Tournament("t3", LocalDate.of(2024, 9, 29), new int[] { 2, 4 }, Tournament.Status.ACTIVE, "north"), 
+        new Tournament("t4", LocalDate.of(2024, 10, 2), new int[] { 1, 3 }, Tournament.Status.ACTIVE, "east"), 
+        new Tournament("t5", LocalDate.of(2024, 10, 5), new int[] { 5, 6 }, Tournament.Status.OPEN, "south"), 
+        new Tournament("t6", LocalDate.of(2024, 9, 8), new int[] { 4, 6 }, Tournament.Status.OPEN, "central"));
 
     listTournaments.forEach(tournament -> {
       repo.save(tournament);

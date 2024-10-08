@@ -34,7 +34,7 @@ public class Tournament {
 
     @Column(name = "region", nullable = false)
     private String region;
-    @Column(name = "player_list", nullable = false)
+    @Column(name = "player_list", nullable = true)
     private List<Long> playerList;
 
     // Constructors

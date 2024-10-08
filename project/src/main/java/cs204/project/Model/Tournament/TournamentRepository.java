@@ -1,5 +1,4 @@
 package cs204.project.model.tournament;
-import cs204.project.model.player.*;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -46,11 +46,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-    		<groupId>com.example</groupId>  <!-- Replace with the group ID of user-repo -->
-    		<artifactId>user-repo</artifactId>  <!-- Replace with artifact ID -->
-    		<version>4.0.0</version>  <!-- Replace with the correct version -->
-		</dependency>
 
 <!-- MARCUS AND MALCOM DEPENDENCY STUFF -->
 		<dependency>
@@ -135,6 +130,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.3.3</version>
 				<!-- MARCUS AND MALCOM -->
 				<configuration>
 					<excludes>

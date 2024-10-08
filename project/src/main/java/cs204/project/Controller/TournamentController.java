@@ -81,7 +81,7 @@ public class TournamentController {
 
     int lowerBoundRank = tournament.getRankRange()[0];
     int upperBoundRank = tournament.getRankRange()[1];
-    int playerRank = playerService.getPlayerRank(id, tournament.getRegion());
+    int playerRank = 5/*playerService.getPlayerRank(id, tournament.getRegion())*/;
 
     if (playerRank < lowerBoundRank && playerRank > upperBoundRank) {
       throw new PlayerRankOOBException(id);
@@ -99,7 +99,7 @@ public class TournamentController {
     Tournament tournament = tournamentService.getTournament(id);
     // check date valid / status
     // Check tournament is OPEN
-    if (tournament.getStatus() == Status.CLOSED) {
+    if (tournament.getStatus() != Status.OPEN) {
       
     }
     // Check if player exists

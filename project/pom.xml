@@ -52,7 +52,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency> 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
@@ -64,7 +64,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -80,11 +80,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 		<groupId>com.mysql</groupId>
 		<artifactId>mysql-connector-j</artifactId>
 		<scope>runtime</scope>
-		</dependency>
+		</dependency> -->
 		
 <!--ENDENDENDENDENDENDENDENDENDENDENDENDENDENDENDENDENDENDEND-->
 
@@ -130,7 +130,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>3.3.3</version>
+				<!-- <version>3.3.3</version> -->
 				<!-- MARCUS AND MALCOM -->
 				<configuration>
 					<excludes>

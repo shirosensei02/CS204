@@ -132,14 +132,14 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<!-- <version>3.3.3</version> -->
 				<!-- MARCUS AND MALCOM -->
-				<configuration>
-					<!-- <excludes>
+				<!-- <configuration>
+					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
-					</excludes> -->
-				</configuration>
+					</excludes>
+				</configuration> -->
 				<!-- ENDENDENDENDENDENDEND -->
 			</plugin>
 		</plugins>

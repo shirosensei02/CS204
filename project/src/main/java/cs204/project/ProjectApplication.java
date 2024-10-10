@@ -17,26 +17,28 @@ import java.time.LocalDate;
 public class ProjectApplication {
 
   public static void main(String[] args) {
-    Dotenv dotenv = Dotenv.configure().load();
-    System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
+    // Dotenv dotenv = Dotenv.configure().load();
+    // System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 
-    ApplicationContext ctx = SpringApplication.run(ProjectApplication.class, args);
+    SpringApplication.run(ProjectApplication.class, args);
 
-    JdbcTemplate template = ctx.getBean(JdbcTemplate.class);
-    TournamentRepository repo = ctx.getBean(TournamentRepository.class);
+    // ApplicationContext ctx = SpringApplication.run(ProjectApplication.class, args);
+
+    // JdbcTemplate template = ctx.getBean(JdbcTemplate.class);
+    // TournamentRepository repo = ctx.getBean(TournamentRepository.class);
 
     // 1.77 quintillion years of weekly tournaments
-    template.execute(
-        "CREATE TABLE IF NOT EXISTS tournaments (" +
-            "tournament_id          BIGSERIAL PRIMARY KEY," +
-            "tournament_name        VARCHAR(255) NOT NULL," +
-            "tournament_date        DATE NOT NULL," +
-            "tournament_rank_range  INT[] NOT NULL," +
-            "tournament_status      VARCHAR(50) NOT NULL," +
-            "tournament_region      VARCHAR(100) NOT NULL," +
-            "tournament_playerList  JSON NOT NULL" +
-            "CONSTRAINT tournament_pk PRIMARY KEY (tournament_id)" + 
-            ")");
+    // template.execute(
+    //     "CREATE TABLE IF NOT EXISTS tournaments (" +
+    //         "tournament_id          BIGSERIAL PRIMARY KEY," +
+    //         "tournament_name        VARCHAR(255) NOT NULL," +
+    //         "tournament_date        DATE NOT NULL," +
+    //         "tournament_rank_range  INT[] NOT NULL," +
+    //         "tournament_status      VARCHAR(50) NOT NULL," +
+    //         "tournament_region      VARCHAR(100) NOT NULL," +
+    //         "tournament_playerList  JSON NOT NULL" +
+    //         "CONSTRAINT tournament_pk PRIMARY KEY (tournament_id)" + 
+    //         ")");
     
     // template.execute(
     //     "CREATE TABLE IF NOT EXISTS player(" +
@@ -83,17 +85,17 @@ public class ProjectApplication {
     // "west")
     // );
 
-    List<Tournament> listTournaments = Arrays.asList(
-        new Tournament("t1", LocalDate.of(2024, 9, 23), new int[] { 1, 2 }, Tournament.Status.CLOSED, "asia"),
-        new Tournament("t2", LocalDate.of(2024, 9, 26), new int[] { 3, 6 }, Tournament.Status.CLOSED, "west"), 
-        new Tournament("t3", LocalDate.of(2024, 9, 29), new int[] { 2, 4 }, Tournament.Status.ACTIVE, "north"), 
-        new Tournament("t4", LocalDate.of(2024, 10, 2), new int[] { 1, 3 }, Tournament.Status.ACTIVE, "east"), 
-        new Tournament("t5", LocalDate.of(2024, 10, 5), new int[] { 5, 6 }, Tournament.Status.OPEN, "south"), 
-        new Tournament("t6", LocalDate.of(2024, 9, 8), new int[] { 4, 6 }, Tournament.Status.OPEN, "central"));
+    // List<Tournament> listTournaments = Arrays.asList(
+    //     new Tournament("t1", LocalDate.of(2024, 9, 23), new int[] { 1, 2 }, Tournament.Status.CLOSED, "asia"),
+    //     new Tournament("t2", LocalDate.of(2024, 9, 26), new int[] { 3, 6 }, Tournament.Status.CLOSED, "west"), 
+    //     new Tournament("t3", LocalDate.of(2024, 9, 29), new int[] { 2, 4 }, Tournament.Status.ACTIVE, "north"), 
+    //     new Tournament("t4", LocalDate.of(2024, 10, 2), new int[] { 1, 3 }, Tournament.Status.ACTIVE, "east"), 
+    //     new Tournament("t5", LocalDate.of(2024, 10, 5), new int[] { 5, 6 }, Tournament.Status.OPEN, "south"), 
+    //     new Tournament("t6", LocalDate.of(2024, 9, 8), new int[] { 4, 6 }, Tournament.Status.OPEN, "central"));
 
-    listTournaments.forEach(tournament -> {
-      repo.save(tournament);
-    });
+    // listTournaments.forEach(tournament -> {
+    //   repo.save(tournament);
+    // });
   }
 
 }

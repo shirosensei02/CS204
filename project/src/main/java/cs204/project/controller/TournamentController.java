@@ -1,7 +1,5 @@
 package cs204.project.controller;
 
-// import cs204.project.Exception.TournamentIsFullException;
-// import cs204.project.Exception.TournamentNotFoundException;
 import cs204.project.exception.*;
 import cs204.project.model.tournament.Tournament;
 import cs204.project.model.tournament.Tournament.Status;
@@ -61,7 +59,6 @@ public class TournamentController {
     } catch (EmptyResultDataAccessException e) {
       throw new TournamentNotFoundException(id);
     }
-
   }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
